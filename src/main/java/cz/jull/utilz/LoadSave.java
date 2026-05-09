@@ -9,6 +9,10 @@ public class LoadSave {
 
     public static final String MENU_BUTTONS = "menu_buttons.png";
     public static final String MENU_BACKGROUND = "menu_background.png";
+    public static final String CREDITS_BACKGROUND = "background.png";
+    public static final String CREDITS_TITLE = "credits_title.png";
+    public static final String CREDITS_FOREGROUND = "foreground.png";
+    public static final String BACK_BUTTON = "back_button.png";
 
     public static BufferedImage getSpriteAtlas(String fileName) {
         BufferedImage img = null;

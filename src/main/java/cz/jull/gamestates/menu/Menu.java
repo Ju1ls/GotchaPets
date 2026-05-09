@@ -12,8 +12,12 @@ import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 
 public class Menu extends State implements StateMethods {
+    private CreditsScreen creditsScreen;
+    private boolean showCredits = false;
+
     private MenuButton[] buttons = new MenuButton[3];
     private BufferedImage backgroundImg;
+
     private int menuWidth;
     private int menuHeight;
 
@@ -21,6 +25,7 @@ public class Menu extends State implements StateMethods {
         super(game);
         loadButtons();
         loadBackground();
+        creditsScreen = new CreditsScreen(game, this);
     }
 
     private void loadBackground() {
@@ -68,17 +73,24 @@ public class Menu extends State implements StateMethods {
 
     @Override
     public void update() {
-        for (MenuButton mb : buttons) {
-            mb.update();
+        if (showCredits) {
+            creditsScreen.update();
+        } else {
+            for (MenuButton mb : buttons) {
+                mb.update();
+            }
         }
     }
 
     @Override
     public void draw(Graphics g) {
-        g.drawImage(backgroundImg, 0, 0, menuWidth, menuHeight, null);
-
-        for (MenuButton mb : buttons) {
-            mb.draw(g);
+        if (showCredits) {
+            creditsScreen.draw(g);
+        } else {
+            g.drawImage(backgroundImg, 0, 0, menuWidth, menuHeight, null);
+            for (MenuButton mb : buttons) {
+                mb.draw(g);
+            }
         }
     }
 
@@ -89,7 +101,9 @@ public class Menu extends State implements StateMethods {
 
     @Override
     public void mousePressed(MouseEvent e) {
-        if (e.getButton() == MouseEvent.BUTTON1) {
+        if (showCredits) {
+            creditsScreen.mousePressed(e);
+        } else if (e.getButton() == MouseEvent.BUTTON1){
             for (MenuButton mb : buttons) {
                 if (mb.isMouseOver()) {
                     mb.setMousePressed(true);
@@ -100,21 +114,20 @@ public class Menu extends State implements StateMethods {
 
     @Override
     public void mouseReleased(MouseEvent e) {
-        if (e.getButton() == MouseEvent.BUTTON1) {
+        if (showCredits) {
+            creditsScreen.mouseReleased(e);
+        } else if (e.getButton() == MouseEvent.BUTTON1){
             for (int i = 0; i < buttons.length; i++) {
                 MenuButton mb = buttons[i];
-
                 if (mb.isMouseOver() && mb.isMousePressed()) {
-
                     if (i == 0) {
                         //start
                     } else if (i == 1) {
                         System.exit(0);
                     } else if (i == 2) {
-                        //credits
+                        showCredits = true;
                     }
                 }
-
                 mb.setMousePressed(false);
             }
         }
@@ -122,14 +135,18 @@ public class Menu extends State implements StateMethods {
 
     @Override
     public void mouseMoved(MouseEvent e) {
-        for (MenuButton mb : buttons) {
-            mb.setMouseOver(false);
-        }
+        if (showCredits) {
+            creditsScreen.mouseMoved(e);
+        } else {
+            for (MenuButton mb : buttons) {
+                mb.setMouseOver(false);
+            }
 
-        for (MenuButton mb : buttons) {
-            if (mb.getBounds().contains(e.getX(), e.getY())) {
-                mb.setMouseOver(true);
-                break;
+            for (MenuButton mb : buttons) {
+                if (mb.getBounds().contains(e.getX(), e.getY())) {
+                    mb.setMouseOver(true);
+                    break;
+                }
             }
         }
     }
@@ -142,5 +159,9 @@ public class Menu extends State implements StateMethods {
     @Override
     public void KeyReleased(KeyEvent e) {
 
+    }
+
+    public void setShowCredits(boolean showCredits) {
+        this.showCredits = showCredits;
     }
 }
