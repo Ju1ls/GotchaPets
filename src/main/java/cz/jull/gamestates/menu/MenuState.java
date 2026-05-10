@@ -1,6 +1,7 @@
 package cz.jull.gamestates.menu;
 
 import cz.jull.Game;
+import cz.jull.gamestates.Button;
 import cz.jull.gamestates.State;
 import cz.jull.gamestates.StateMethods;
 import cz.jull.utilz.Constants;
@@ -11,17 +12,17 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 
-public class Menu extends State implements StateMethods {
+public class MenuState extends State implements StateMethods {
     private CreditsScreen creditsScreen;
     private boolean showCredits = false;
 
-    private MenuButton[] buttons = new MenuButton[3];
+    private Button[] buttons = new Button[3];
     private BufferedImage backgroundImg;
 
     private int menuWidth;
     private int menuHeight;
 
-    public Menu(Game game) {
+    public MenuState(Game game) {
         super(game);
         loadButtons();
         loadBackground();
@@ -31,24 +32,24 @@ public class Menu extends State implements StateMethods {
     private void loadBackground() {
         backgroundImg = LoadSave.getSpriteAtlas(LoadSave.MENU_BACKGROUND);
 
-        menuWidth = Game.GAME_WIDTH;
-        menuHeight = Game.GAME_HEIGHT;
+        menuWidth = Constants.GAME_WIDTH;
+        menuHeight = Constants.GAME_HEIGHT;
     }
 
     private void loadButtons() {
         BufferedImage img = LoadSave.getSpriteAtlas(LoadSave.MENU_BUTTONS);
 
-        int srcWidth = Constants.UI.Buttons.B_WIDTH_DEFAULT;
-        int srcHeight = Constants.UI.Buttons.B_HEIGHT_DEFAULT;
+        int srcWidth = Constants.B_WIDTH_MENU;
+        int srcHeight = Constants.B_HEIGHT_MENU;
 
-        int drawWidth = (int) (srcWidth * Game.SCALE);
-        int drawHeight = (int) (srcHeight * Game.SCALE);
+        int drawWidth = (int) (srcWidth * Constants.SCALE);
+        int drawHeight = (int) (srcHeight * Constants.SCALE);
 
         int yPos = 500;
         int spacing = 40; // Gap between buttons
 
         int totalRowWidth = (drawWidth * 3) + (spacing * 2);
-        int startX = (Game.GAME_WIDTH / 2) - (totalRowWidth / 2);
+        int startX = (Constants.GAME_WIDTH / 2) - (totalRowWidth / 2);
 
         // i = row; j = column
         for (int i = 0; i < buttons.length; i++) {
@@ -67,7 +68,7 @@ public class Menu extends State implements StateMethods {
                 xPos = startX + (drawWidth * 2) + (spacing * 2);
             }
 
-            buttons[i] = new MenuButton(xPos, yPos, drawWidth, drawHeight, tempImgs);
+            buttons[i] = new Button(xPos, yPos, drawWidth, drawHeight, tempImgs);
         }
     }
 
@@ -76,7 +77,7 @@ public class Menu extends State implements StateMethods {
         if (showCredits) {
             creditsScreen.update();
         } else {
-            for (MenuButton mb : buttons) {
+            for (Button mb : buttons) {
                 mb.update();
             }
         }
@@ -88,15 +89,10 @@ public class Menu extends State implements StateMethods {
             creditsScreen.draw(g);
         } else {
             g.drawImage(backgroundImg, 0, 0, menuWidth, menuHeight, null);
-            for (MenuButton mb : buttons) {
+            for (Button mb : buttons) {
                 mb.draw(g);
             }
         }
-    }
-
-    @Override
-    public void mouseClicked(MouseEvent e) {
-
     }
 
     @Override
@@ -104,7 +100,7 @@ public class Menu extends State implements StateMethods {
         if (showCredits) {
             creditsScreen.mousePressed(e);
         } else if (e.getButton() == MouseEvent.BUTTON1){
-            for (MenuButton mb : buttons) {
+            for (Button mb : buttons) {
                 if (mb.isMouseOver()) {
                     mb.setMousePressed(true);
                 }
@@ -118,10 +114,10 @@ public class Menu extends State implements StateMethods {
             creditsScreen.mouseReleased(e);
         } else if (e.getButton() == MouseEvent.BUTTON1){
             for (int i = 0; i < buttons.length; i++) {
-                MenuButton mb = buttons[i];
+                Button mb = buttons[i];
                 if (mb.isMouseOver() && mb.isMousePressed()) {
                     if (i == 0) {
-                        //start
+                        game.startGame();
                     } else if (i == 1) {
                         System.exit(0);
                     } else if (i == 2) {
@@ -138,11 +134,11 @@ public class Menu extends State implements StateMethods {
         if (showCredits) {
             creditsScreen.mouseMoved(e);
         } else {
-            for (MenuButton mb : buttons) {
+            for (Button mb : buttons) {
                 mb.setMouseOver(false);
             }
 
-            for (MenuButton mb : buttons) {
+            for (Button mb : buttons) {
                 if (mb.getBounds().contains(e.getX(), e.getY())) {
                     mb.setMouseOver(true);
                     break;
@@ -158,6 +154,11 @@ public class Menu extends State implements StateMethods {
 
     @Override
     public void KeyReleased(KeyEvent e) {
+
+    }
+
+    @Override
+    public void mouseClicked(MouseEvent e) {
 
     }
 

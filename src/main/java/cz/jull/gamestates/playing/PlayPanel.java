@@ -1,23 +1,22 @@
-package cz.jull.gamestates.menu;
+package cz.jull.gamestates.playing;
 
 import cz.jull.Game;
-import cz.jull.inputs.MenuInputs;
+import cz.jull.inputs.PlayInputs;
 import cz.jull.utilz.Constants;
 
 import javax.swing.*;
 import java.awt.*;
 
-public class MenuPanel extends JPanel {
-
+public class PlayPanel extends JPanel {
     private Game game;
 
-    public MenuPanel(Game game) {
+    public PlayPanel(Game game) {
         this.game = game;
         setPanelSize();
 
-        MenuInputs menuInputs = new MenuInputs(this, game.getMenu());
-        addMouseListener(menuInputs);
-        addMouseMotionListener(menuInputs);
+        PlayInputs playInputs = new PlayInputs(this, game.getPlay());
+        addMouseListener(playInputs);
+        addMouseMotionListener(playInputs);
     }
 
     private void setPanelSize() {
@@ -34,8 +33,8 @@ public class MenuPanel extends JPanel {
         float scaleY = (float) getHeight() / Constants.GAME_HEIGHT;
         g2d.scale(scaleX, scaleY);
 
-        if (game.getMenu() != null) {
-            game.getMenu().draw(g2d);
+        if (game.getPlay() != null) {
+            game.getPlay().draw(g2d);
         }
     }
 

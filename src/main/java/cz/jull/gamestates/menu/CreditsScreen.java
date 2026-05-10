@@ -1,6 +1,7 @@
 package cz.jull.gamestates.menu;
 
 import cz.jull.Game;
+import cz.jull.gamestates.Button;
 import cz.jull.gamestates.StateMethods;
 import cz.jull.utilz.Constants;
 import cz.jull.utilz.LoadSave;
@@ -12,14 +13,14 @@ import java.awt.image.BufferedImage;
 
 public class CreditsScreen implements StateMethods {
     private Game game;
-    private Menu menu;
+    private MenuState menu;
 
     private BufferedImage backgroundImg;
     private BufferedImage titleImg;
     private BufferedImage foregroundImg;
-    private MenuButton backButton;
+    private Button backButton;
 
-    public CreditsScreen(Game game, Menu menu) {
+    public CreditsScreen(Game game, MenuState menu) {
         this.game = game;
         this.menu = menu;
         loadImages();
@@ -35,8 +36,8 @@ public class CreditsScreen implements StateMethods {
     private void loadBackButton() {
         BufferedImage img = LoadSave.getSpriteAtlas(LoadSave.BACK_BUTTON);
 
-        int srcWidth = 350;
-        int srcHeight = 145;
+        int srcWidth = Constants.B_WIDTH_BACK;
+        int srcHeight = Constants.B_DEFAULT_HEIGHT;
 
         BufferedImage[] temp = new BufferedImage[3];
 
@@ -47,7 +48,7 @@ public class CreditsScreen implements StateMethods {
         int xPos = 20;
         int yPos = 20;
 
-        backButton = new MenuButton(xPos, yPos, srcWidth, srcHeight, temp);
+        backButton = new Button(xPos, yPos, srcWidth, srcHeight, temp);
     }
 
     @Override
@@ -58,7 +59,7 @@ public class CreditsScreen implements StateMethods {
     @Override
     public void draw(Graphics g) {
         // Background
-        g.drawImage(backgroundImg, 0,0, Game.GAME_WIDTH, Game.GAME_HEIGHT, null);
+        g.drawImage(backgroundImg, 0,0, Constants.GAME_WIDTH, Constants.GAME_HEIGHT, null);
 
         // Foreground
         int foregroundWidth = 1600; // here too

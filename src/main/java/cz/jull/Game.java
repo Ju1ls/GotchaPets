@@ -1,28 +1,35 @@
 package cz.jull;
 
-import cz.jull.gamestates.menu.Menu;
+import cz.jull.gamestates.menu.MenuState;
 import cz.jull.gamestates.menu.MenuPanel;
 import cz.jull.gamestates.menu.MenuWindow;
-
-import java.awt.*;
+import cz.jull.gamestates.playing.PlayPanel;
+import cz.jull.gamestates.playing.PlayState;
+import cz.jull.gamestates.playing.PlayWindow;
+import cz.jull.logic.Player;
 
 public class Game implements Runnable{
+    private Player player;
 
     private MenuWindow menuWindow;
     private MenuPanel menuPanel;
-    private Menu menu;
+    private MenuState menu;
+
+    private PlayWindow playWindow;
+    private PlayPanel playPanel;
+    private PlayState play;
 
     private Thread gameThread;
-
-    public static final int GAME_WIDTH = 1600;
-    public static final int GAME_HEIGHT = 900;
-    public static final float SCALE = 0.9f;
 
     private final int FPS_SET = 120;
     private final int UPS_SET = 200;
 
+    private boolean isPlaying = false;
+
     public Game() {
-        menu = new Menu(this);
+        player = new Player();
+
+        menu = new MenuState(this);
         menuPanel = new MenuPanel(this);
         menuWindow = new MenuWindow(menuPanel);
 
@@ -32,6 +39,25 @@ public class Game implements Runnable{
     private void startGameLoop() {
         gameThread = new Thread(this);
         gameThread.start();
+    }
+
+    public void startGame() {
+        menuWindow.closeWindow();
+
+        play = new PlayState(this);
+        playPanel = new PlayPanel(this);
+        playWindow = new PlayWindow(playPanel);
+
+        isPlaying = true;
+    }
+
+    public void returnToMenu() {
+        if (playWindow != null) {
+            playWindow.closeWindow();
+        }
+
+        menuWindow = new MenuWindow(menuPanel);
+        isPlaying = false;
     }
 
     @Override
@@ -57,21 +83,33 @@ public class Game implements Runnable{
             }
 
             if (deltaF >= 1) {
-                menuPanel.repaint();
+                if (!isPlaying && menuPanel != null) {
+                    menuPanel.repaint();
+                } else if (isPlaying && playPanel != null) {
+                    playPanel.repaint();
+                }
                 deltaF--;
             }
         }
     }
 
     public void update() {
-        menu.update();
+        if (!isPlaying) {
+            menu.update();
+        } else if (play != null) {
+            play.update();
+        }
     }
 
-    public void render(Graphics g) {
-        menu.draw(g);
-    }
-
-    public Menu getMenu() {
+    public MenuState getMenu() {
         return menu;
+    }
+
+    public PlayState getPlay() {
+        return play;
+    }
+
+    public Player getPlayer() {
+        return player;
     }
 }

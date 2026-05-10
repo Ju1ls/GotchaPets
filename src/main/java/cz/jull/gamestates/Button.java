@@ -1,9 +1,9 @@
-package cz.jull.gamestates.menu;
+package cz.jull.gamestates;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-public class MenuButton {
+public class Button {
     private int xPos;
     private int yPos;
     private int width;
@@ -16,7 +16,7 @@ public class MenuButton {
     private boolean mousePressed;
     private Rectangle bounds;
 
-    public MenuButton(int xPos, int yPos, int width, int height, BufferedImage[] imgs) {
+    public Button(int xPos, int yPos, int width, int height, BufferedImage[] imgs) {
         this.xPos = xPos;
         this.yPos = yPos;
         this.width = width;
