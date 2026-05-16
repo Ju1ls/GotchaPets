@@ -1,5 +1,7 @@
 package cz.jull.gamestates;
 
+import cz.jull.utils.Constants;
+
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
@@ -30,12 +32,12 @@ public class Button {
     }
 
     public void update() {
-        state = 0; // Default
+        state = Constants.BUTTON_STATE_DEFAULT;
         if (mouseOver) {
-            state = 1; // Hover
+            state = Constants.BUTTON_STATE_HOVER;
         }
         if (mousePressed) {
-            state = 2; // Pressed
+            state = Constants.BUTTON_STATE_PRESSED;
         }
     }
 

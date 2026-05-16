@@ -1,4 +1,4 @@
-package cz.jull.utilz;
+package cz.jull.utils;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;

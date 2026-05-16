@@ -35,19 +35,37 @@ public class Pet {
         return name;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public PetType getType() {
         return type;
+    }
+
+    public void setType(PetType type) {
+        this.type = type;
     }
 
     public int getHunger() {
         return hunger;
     }
 
+    public void setHunger(int hunger) {
+        this.hunger = hunger;
+    }
+
     public int getEnergy() {
         return energy;
+    }
+
+    public void setEnergy(int energy) {
+        this.energy = energy;
     }
 
     public int getLove() {
         return love;
     }
+
+
 }

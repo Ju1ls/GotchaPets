@@ -2,7 +2,7 @@ package cz.jull.gamestates.menu;
 
 import cz.jull.Game;
 import cz.jull.inputs.MenuInputs;
-import cz.jull.utilz.Constants;
+import cz.jull.utils.Constants;
 
 import javax.swing.*;
 import java.awt.*;

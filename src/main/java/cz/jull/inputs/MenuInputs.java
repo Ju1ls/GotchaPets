@@ -2,7 +2,7 @@ package cz.jull.inputs;
 
 import cz.jull.gamestates.menu.MenuState;
 import cz.jull.gamestates.menu.MenuPanel;
-import cz.jull.utilz.InputUtils;
+import cz.jull.utils.InputUtils;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;

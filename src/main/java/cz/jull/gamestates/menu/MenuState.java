@@ -4,8 +4,8 @@ import cz.jull.Game;
 import cz.jull.gamestates.Button;
 import cz.jull.gamestates.State;
 import cz.jull.gamestates.StateMethods;
-import cz.jull.utilz.Constants;
-import cz.jull.utilz.LoadSave;
+import cz.jull.utils.Constants;
+import cz.jull.utils.LoadSave;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -26,7 +26,7 @@ public class MenuState extends State implements StateMethods {
         super(game);
         loadButtons();
         loadBackground();
-        creditsScreen = new CreditsScreen(game, this);
+        creditsScreen = new CreditsScreen(this);
     }
 
     private void loadBackground() {
@@ -39,8 +39,8 @@ public class MenuState extends State implements StateMethods {
     private void loadButtons() {
         BufferedImage img = LoadSave.getSpriteAtlas(LoadSave.MENU_BUTTONS);
 
-        int srcWidth = Constants.B_WIDTH_MENU;
-        int srcHeight = Constants.B_HEIGHT_MENU;
+        int srcWidth = Constants.BUTTON_WIDTH_MENU;
+        int srcHeight = Constants.BUTTON_HEIGHT_MENU;
 
         int drawWidth = (int) (srcWidth * Constants.SCALE);
         int drawHeight = (int) (srcHeight * Constants.SCALE);

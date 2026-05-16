@@ -5,8 +5,8 @@ import cz.jull.gamestates.State;
 import cz.jull.gamestates.StateMethods;
 import cz.jull.gamestates.Button;
 import cz.jull.logic.pet.Pet;
-import cz.jull.utilz.Constants;
-import cz.jull.utilz.LoadSave;
+import cz.jull.utils.Constants;
+import cz.jull.utils.LoadSave;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -24,6 +24,9 @@ public class PlayState extends State implements StateMethods {
 
     private Button[] buttons;
 
+    private BufferedImage currency;
+    private BufferedImage currencyBackground;
+
     // Pet Stats
     private BufferedImage[][] statSegments = new BufferedImage[5][3];
     private BufferedImage statBackground;
@@ -40,20 +43,34 @@ public class PlayState extends State implements StateMethods {
     public PlayState(Game game) {
         super(game);
 
-        loadBackgrounds();
+        //loadBackgrounds();
         loadStatsImages();
         loadButtons();
+        loadCurrencyImg();
     }
 
     private void loadBackgrounds() {
-        homeBgImg = LoadSave.getSpriteAtlas(LoadSave.CREDITS_BACKGROUND);
+        homeBgImg = LoadSave.getSpriteAtlas(LoadSave.MENU_BACKGROUND);
+    }
+
+    private void loadCurrencyImg() {
+        BufferedImage img = LoadSave.getSpriteAtlas(LoadSave.CURRENCY);
+
+        int bgWidth = Constants.CURRENCY_BACKGROUND_WIDTH;
+        int bgHeight = Constants.BUTTON_DEFAULT_HEIGHT;
+
+        int coinSize = Constants.COIN_SIZE;
+        int coinXOffset = 416;
+
+        currencyBackground = img.getSubimage(0,0, bgWidth, bgHeight);
+        currency = img.getSubimage(coinXOffset, 0, coinSize, coinSize);
     }
 
     private void loadStatsImages() {
         BufferedImage img = LoadSave.getSpriteAtlas(LoadSave.PET_HEALTH_STATES);
 
-        int fullBarWidth = Constants.PET_STATE_WIDTH;
-        int barHeight = Constants.B_DEFAULT_HEIGHT;
+        int fullBarWidth = Constants.PET_STAT_WIDTH;
+        int barHeight = Constants.BUTTON_DEFAULT_HEIGHT;
 
         int[] segmentWidths = {140, 135, 140};
         int[] segmentXOffsets = {0, 140, 275};
@@ -72,16 +89,16 @@ public class PlayState extends State implements StateMethods {
         BufferedImage backButtonSprite = LoadSave.getSpriteAtlas(LoadSave.BACK_BUTTON);
         BufferedImage playButtonsSprite = LoadSave.getSpriteAtlas(LoadSave.GAME_BUTTONS);
 
-        int backButtonWidth = Constants.B_WIDTH_BACK;
-        int backButtonHeight = Constants.B_DEFAULT_HEIGHT;
+        int backButtonWidth = Constants.BUTTON_WIDTH_BACK;
+        int backButtonHeight = Constants.BUTTON_DEFAULT_HEIGHT;
 
         BufferedImage[] backImgs = new BufferedImage[3];
         for (int i = 0; i < 3; i++) {
             backImgs[i] = backButtonSprite.getSubimage(i * backButtonWidth, 0, backButtonWidth, backButtonHeight);
         }
 
-        int playButtonWidth = Constants.B_WIDTH_GAME;
-        int playButtonHeight = Constants.B_DEFAULT_HEIGHT;
+        int playButtonWidth = Constants.BUTTON_WIDTH_GAME;
+        int playButtonHeight = Constants.BUTTON_DEFAULT_HEIGHT;
 
         BufferedImage[][] playImgs = new BufferedImage[5][3];
         for (int i = 0; i < 5; i++) {
@@ -141,17 +158,37 @@ public class PlayState extends State implements StateMethods {
         }
 
         // Currency
-        // will change later (graphic designer didn't give me the png)
-        g.setColor(Color.PINK);
-        g.fillRoundRect(Constants.GAME_WIDTH - 320, 20, 300, 60, 30, 30);
-        g.setColor(Color.WHITE);
-        g.setFont(new Font("Arial", Font.BOLD, 40));
-        g.drawString(game.getPlayer().getCoins() + " Coins", Constants.GAME_WIDTH - 280, 65);
+        drawCurrency(g);
 
         // Pet Stats
         if (currentPet != null) {
             drawPetStatsBar(g);
         }
+    }
+
+    private void drawCurrency(Graphics g) {
+        int backgroundX = Constants.GAME_WIDTH - 435;
+        int backgroundY = 20;
+
+        int backgroundWidth = Constants.CURRENCY_BACKGROUND_WIDTH;
+        int backgroundHeight = Constants.BUTTON_DEFAULT_HEIGHT;
+
+        g.drawImage(currencyBackground, backgroundX, backgroundY, backgroundWidth, backgroundHeight, null);
+
+        int coinSize = Constants.COIN_SIZE;
+
+        int coinX = backgroundX + 20;
+        int coinY = backgroundY + 20;
+
+        g.drawImage(currency, coinX, coinY, coinSize, coinSize, null);
+
+        g.setColor(Color.WHITE);
+        g.setFont(new Font("Arial", Font.BOLD, 60));
+
+        int textX = coinX + coinSize + 20;
+        int textY = backgroundY + 95;
+
+        g.drawString(game.getPlayer().getCoins() + "", textX, textY);
     }
 
     private void drawPetStatsBar(Graphics g) {
@@ -186,18 +223,18 @@ public class PlayState extends State implements StateMethods {
 
     private int getColorRow(int statValue) {
         if (statValue >= 81) {
-            return 0; // Green
+            return Constants.STATE_GREEN;
         }
         if (statValue >= 61) {
-            return 1; // Light Green
+            return Constants.STATE_LIGHT_GREEN;
         }
         if (statValue >= 41) {
-            return 2; // Yellow
+            return Constants.STATE_YELLOW;
         }
         if (statValue >= 21) {
-            return 3; // Orange
+            return Constants.STATE_ORANGE;
         }
-        return 4;     // Red
+        return Constants.STATE_RED;
     }
 
     @Override

@@ -2,7 +2,7 @@ package cz.jull.gamestates.playing;
 
 import cz.jull.Game;
 import cz.jull.inputs.PlayInputs;
-import cz.jull.utilz.Constants;
+import cz.jull.utils.Constants;
 
 import javax.swing.*;
 import java.awt.*;

@@ -1,10 +1,9 @@
 package cz.jull.gamestates.menu;
 
-import cz.jull.Game;
 import cz.jull.gamestates.Button;
 import cz.jull.gamestates.StateMethods;
-import cz.jull.utilz.Constants;
-import cz.jull.utilz.LoadSave;
+import cz.jull.utils.Constants;
+import cz.jull.utils.LoadSave;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -12,7 +11,6 @@ import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 
 public class CreditsScreen implements StateMethods {
-    private Game game;
     private MenuState menu;
 
     private BufferedImage backgroundImg;
@@ -20,15 +18,13 @@ public class CreditsScreen implements StateMethods {
     private BufferedImage foregroundImg;
     private Button backButton;
 
-    public CreditsScreen(Game game, MenuState menu) {
-        this.game = game;
+    public CreditsScreen(MenuState menu) {
         this.menu = menu;
         loadImages();
         loadBackButton();
     }
 
     private void loadImages() {
-        backgroundImg = LoadSave.getSpriteAtlas(LoadSave.CREDITS_BACKGROUND);
         titleImg = LoadSave.getSpriteAtlas(LoadSave.CREDITS_TITLE);
         foregroundImg = LoadSave.getSpriteAtlas(LoadSave.CREDITS_FOREGROUND);
     }
@@ -36,8 +32,8 @@ public class CreditsScreen implements StateMethods {
     private void loadBackButton() {
         BufferedImage img = LoadSave.getSpriteAtlas(LoadSave.BACK_BUTTON);
 
-        int srcWidth = Constants.B_WIDTH_BACK;
-        int srcHeight = Constants.B_DEFAULT_HEIGHT;
+        int srcWidth = Constants.BUTTON_WIDTH_BACK;
+        int srcHeight = Constants.BUTTON_DEFAULT_HEIGHT;
 
         BufferedImage[] temp = new BufferedImage[3];
 
@@ -59,7 +55,8 @@ public class CreditsScreen implements StateMethods {
     @Override
     public void draw(Graphics g) {
         // Background
-        g.drawImage(backgroundImg, 0,0, Constants.GAME_WIDTH, Constants.GAME_HEIGHT, null);
+        g.setColor(new Color(89, 198, 255));
+        g.fillRect(0,0, Constants.GAME_WIDTH, Constants.GAME_HEIGHT);
 
         // Foreground
         int foregroundWidth = 1600; // here too

@@ -2,7 +2,7 @@ package cz.jull.inputs;
 
 import cz.jull.gamestates.playing.PlayPanel;
 import cz.jull.gamestates.playing.PlayState;
-import cz.jull.utilz.InputUtils;
+import cz.jull.utils.InputUtils;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
