@@ -1,14 +1,19 @@
 package cz.jull.logic;
 
 import cz.jull.logic.pet.Pet;
-import cz.jull.logic.pet.PetType;
+import cz.jull.utils.SaveManager;
 
-public class Player {
+import java.io.Serial;
+import java.io.Serializable;
+
+public class Player implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 1L;
+
     private int coins = 500;
     private Pet equippedPet;
 
     public Player() {
-        this.equippedPet = new Pet("Starter Pet", PetType.HOME);
     }
 
     public void addCoins(int amount) {

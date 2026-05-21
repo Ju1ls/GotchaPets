@@ -27,7 +27,15 @@ public class Game implements Runnable{
     private boolean isPlaying = false;
 
     public Game() {
-        player = new Player();
+        player = cz.jull.utils.SaveManager.loadGame();
+
+        if (player == null) {
+            player = new Player();
+        }
+
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+            cz.jull.utils.SaveManager.saveGame(player);
+        }));
 
         menu = new MenuState(this);
         menuPanel = new MenuPanel(this);

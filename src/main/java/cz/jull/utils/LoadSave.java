@@ -17,6 +17,9 @@ public class LoadSave {
     public static final String PET_HEALTH_STATES = "pet_health_states.png";
     public static final String CURRENCY = "coin_background.png";
 
+    public static final String DEFAULT_PET_SPRITES = "default_pet_sprites.png";
+    public static final String PET_BED = "pet_bed.png";
+
     public static BufferedImage getSpriteAtlas(String fileName) {
         BufferedImage img = null;
         try (InputStream is = LoadSave.class.getResourceAsStream("/" + fileName)) {

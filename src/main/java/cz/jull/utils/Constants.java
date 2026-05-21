@@ -29,4 +29,27 @@ public class Constants {
     public static final int STATE_YELLOW = 2;
     public static final int STATE_ORANGE = 3;
     public static final int STATE_RED = 4;
+
+    //Pets
+    public static final int CAT_WIDTH = 315;
+    public static final int CAT_HEIGHT = 375;
+
+    public static final int DOG_WIDTH = 265;
+    public static final int DOG_HEIGHT = 515;
+
+    // Other
+    public static final int ZZZ_WIDTH = 80;
+    public static final int ZZZ_HEIGHT = 100;
+
+    public static final int PET_BED_WIDTH = 690;
+    public static final int PET_BED_HEIGHT = 300;
+
+    public static final int BED_X = 237;
+    public static final int BED_Y = 580;
+
+    // PET_ACTIONS
+    public static final int ACTION_IDLE = 0;
+    public static final int ACTION_LOVE = 1;
+    public static final int ACTION_FEED = 2;
+    public static final int ACTION_SLEEP = 3;
 }
