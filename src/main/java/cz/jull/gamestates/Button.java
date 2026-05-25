@@ -13,7 +13,7 @@ public class Button {
 
     private BufferedImage[] imgs;
 
-    private int state = 0; // 0 = Default, 1 = Hover, 2 = Pressed
+    private int state = Constants.BUTTON_STATE_DEFAULT;
     private boolean mouseOver;
     private boolean mousePressed;
     private Rectangle bounds;
