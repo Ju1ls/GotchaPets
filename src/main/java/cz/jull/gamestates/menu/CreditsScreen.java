@@ -59,14 +59,14 @@ public class CreditsScreen implements StateMethods {
         g.fillRect(0,0, Constants.GAME_WIDTH, Constants.GAME_HEIGHT);
 
         // Foreground
-        int foregroundWidth = 1600; // here too
-        int foregroundHeight = 900;
+        int foregroundWidth = Constants.GAME_WIDTH;
+        int foregroundHeight = Constants.GAME_HEIGHT;
 
         g.drawImage(foregroundImg, 0, 0, foregroundWidth, foregroundHeight, null);
 
         // Title
-        int titleWidth = 1600; // change to game.width n height
-        int titleHeight = 900;
+        int titleWidth = Constants.GAME_WIDTH;
+        int titleHeight = Constants.GAME_HEIGHT;
 
         g.drawImage(titleImg, 0, 0, titleWidth, titleHeight, null);
 
