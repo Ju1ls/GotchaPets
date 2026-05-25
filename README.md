@@ -17,6 +17,8 @@ GothaPets! is a graphical virtual pet simulator built in Java. You start with a 
 
 The game relies entirely on a graphical user interface (GUI). Use your mouse (Left-Click) to interact with the on-screen buttons.
 
+---
+
 ![Screenshot of the Menu Screen](link1.png)
 *(Caption: The main menu window.)*
 
