@@ -4,6 +4,8 @@ import cz.jull.Game;
 import cz.jull.gamestates.Button;
 import cz.jull.gamestates.State;
 import cz.jull.gamestates.StateMethods;
+import cz.jull.ui.BackgroundUI;
+import cz.jull.ui.UtilsUI;
 import cz.jull.utils.Constants;
 import cz.jull.utils.LoadSave;
 
@@ -17,33 +19,19 @@ public class MenuState extends State implements StateMethods {
     private boolean showCredits = false;
 
     private Button[] buttons = new Button[3];
-    private BufferedImage backgroundImg;
 
-    private int menuWidth;
-    private int menuHeight;
+    private BackgroundUI backgroundUI;
 
     public MenuState(Game game) {
         super(game);
         loadButtons();
-        loadBackground();
+        backgroundUI = new BackgroundUI();
         creditsScreen = new CreditsScreen(this);
     }
 
-    private void loadBackground() {
-        backgroundImg = LoadSave.getSpriteAtlas(LoadSave.MENU_BACKGROUND);
-
-        menuWidth = Constants.GAME_WIDTH;
-        menuHeight = Constants.GAME_HEIGHT;
-    }
-
     private void loadButtons() {
-        BufferedImage img = LoadSave.getSpriteAtlas(LoadSave.MENU_BUTTONS);
-
         int srcWidth = Constants.BUTTON_WIDTH_MENU;
-        int srcHeight = Constants.BUTTON_HEIGHT_MENU;
-
         int drawWidth = (int) (srcWidth * Constants.SCALE);
-        int drawHeight = (int) (srcHeight * Constants.SCALE);
 
         int yPos = 500;
         int spacing = 40; // Gap between buttons
@@ -51,25 +39,13 @@ public class MenuState extends State implements StateMethods {
         int totalRowWidth = (drawWidth * 3) + (spacing * 2);
         int startX = (Constants.GAME_WIDTH / 2) - (totalRowWidth / 2);
 
-        // i = row; j = column
-        for (int i = 0; i < buttons.length; i++) {
-            BufferedImage[] tempImgs = new BufferedImage[3];
+        int leftX = startX;
+        int middleX = startX + drawWidth + spacing;
+        int rightX = startX + (drawWidth * 2) + (spacing * 2);
 
-            for (int j = 0; j < tempImgs.length; j++) {
-                tempImgs[j] = img.getSubimage(j * srcWidth, i * srcHeight, srcWidth, srcHeight);
-            }
-
-            int xPos = 0;
-            if (i == 1) { // QUIT
-                xPos = startX;
-            } else if (i == 0) { // PLAY
-                xPos = startX + drawWidth + spacing;
-            } else if (i == 2) { // CREDITS
-                xPos = startX + (drawWidth * 2) + (spacing * 2);
-            }
-
-            buttons[i] = new Button(xPos, yPos, drawWidth, drawHeight, tempImgs);
-        }
+        buttons[Constants.BUTTON_QUIT] = UtilsUI.createMenuButton(leftX, yPos, Constants.BUTTON_QUIT);
+        buttons[Constants.BUTTON_PLAY] = UtilsUI.createMenuButton(middleX, yPos, Constants.BUTTON_PLAY);
+        buttons[Constants.BUTTON_CREDITS] = UtilsUI.createMenuButton(rightX, yPos, Constants.BUTTON_CREDITS);
     }
 
     @Override
@@ -88,7 +64,7 @@ public class MenuState extends State implements StateMethods {
         if (showCredits) {
             creditsScreen.draw(g);
         } else {
-            g.drawImage(backgroundImg, 0, 0, menuWidth, menuHeight, null);
+            backgroundUI.drawMenu(g);
             for (Button mb : buttons) {
                 mb.draw(g);
             }

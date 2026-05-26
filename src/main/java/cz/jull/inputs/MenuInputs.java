@@ -9,7 +9,6 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseWheelEvent;
 
 public class MenuInputs extends MouseAdapter {
-
     private MenuPanel panel;
     private MenuState menu;
 

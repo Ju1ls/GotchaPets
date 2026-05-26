@@ -8,7 +8,6 @@ import javax.swing.*;
 import java.awt.*;
 
 public class MenuPanel extends JPanel {
-
     private Game game;
 
     public MenuPanel(Game game) {

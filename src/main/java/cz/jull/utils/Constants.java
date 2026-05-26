@@ -17,8 +17,12 @@ public class Constants {
     public static final int BUTTON_STATE_HOVER = 1;
     public static final int BUTTON_STATE_PRESSED = 2;
 
+    public static final int BUTTON_PLAY = 0;
+    public static final int BUTTON_QUIT = 1;
+    public static final int BUTTON_CREDITS = 2;
+
     // Game
-    public static final int GAME_WIDTH = 1600;
+    public static final int GAME_WIDTH = 1599;
     public static final int GAME_HEIGHT = 900;
     public static final float SCALE = 0.9f;
 

@@ -2,6 +2,7 @@ package cz.jull.gamestates.menu;
 
 import cz.jull.gamestates.Button;
 import cz.jull.gamestates.StateMethods;
+import cz.jull.ui.UtilsUI;
 import cz.jull.utils.Constants;
 import cz.jull.utils.LoadSave;
 
@@ -21,30 +22,12 @@ public class CreditsScreen implements StateMethods {
     public CreditsScreen(MenuState menu) {
         this.menu = menu;
         loadImages();
-        loadBackButton();
+        backButton = UtilsUI.createBackButton(20, 20);
     }
 
     private void loadImages() {
         titleImg = LoadSave.getSpriteAtlas(LoadSave.CREDITS_TITLE);
         foregroundImg = LoadSave.getSpriteAtlas(LoadSave.CREDITS_FOREGROUND);
-    }
-
-    private void loadBackButton() {
-        BufferedImage img = LoadSave.getSpriteAtlas(LoadSave.BACK_BUTTON);
-
-        int srcWidth = Constants.BUTTON_WIDTH_BACK;
-        int srcHeight = Constants.BUTTON_DEFAULT_HEIGHT;
-
-        BufferedImage[] temp = new BufferedImage[3];
-
-        for (int i = 0; i < 3; i++) {
-            temp[i] = img.getSubimage(i * srcWidth, 0, srcWidth, srcHeight);
-        }
-
-        int xPos = 20;
-        int yPos = 20;
-
-        backButton = new Button(xPos, yPos, srcWidth, srcHeight, temp);
     }
 
     @Override

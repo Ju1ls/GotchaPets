@@ -1,5 +1,6 @@
 package cz.jull;
 
+import cz.jull.gamestates.GameState;
 import cz.jull.gamestates.menu.MenuState;
 import cz.jull.gamestates.menu.MenuPanel;
 import cz.jull.gamestates.menu.MenuWindow;
@@ -7,6 +8,7 @@ import cz.jull.gamestates.playing.PlayPanel;
 import cz.jull.gamestates.playing.PlayState;
 import cz.jull.gamestates.playing.PlayWindow;
 import cz.jull.logic.Player;
+import cz.jull.utils.SaveManager;
 
 public class Game implements Runnable{
     private Player player;
@@ -24,17 +26,17 @@ public class Game implements Runnable{
     private final int FPS_SET = 120;
     private final int UPS_SET = 200;
 
-    private boolean isPlaying = false;
+    private GameState gameState = GameState.MENU;
 
     public Game() {
-        player = cz.jull.utils.SaveManager.loadGame();
+        player = SaveManager.loadGame();
 
         if (player == null) {
             player = new Player();
         }
 
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-            cz.jull.utils.SaveManager.saveGame(player);
+            SaveManager.saveGame(player);
         }));
 
         menu = new MenuState(this);
@@ -56,7 +58,7 @@ public class Game implements Runnable{
         playPanel = new PlayPanel(this);
         playWindow = new PlayWindow(playPanel);
 
-        isPlaying = true;
+        gameState = GameState.PLAYING;
     }
 
     public void returnToMenu() {
@@ -65,7 +67,7 @@ public class Game implements Runnable{
         }
 
         menuWindow = new MenuWindow(menuPanel);
-        isPlaying = false;
+        gameState = GameState.MENU;
     }
 
     @Override
@@ -91,10 +93,17 @@ public class Game implements Runnable{
             }
 
             if (deltaF >= 1) {
-                if (!isPlaying && menuPanel != null) {
-                    menuPanel.repaint();
-                } else if (isPlaying && playPanel != null) {
-                    playPanel.repaint();
+                switch (gameState) {
+                    case MENU -> {
+                        if (menuPanel != null) {
+                            menuPanel.repaint();
+                        }
+                    }
+                    case PLAYING -> {
+                        if (playPanel != null) {
+                            playPanel.repaint();
+                        }
+                    }
                 }
                 deltaF--;
             }
@@ -102,10 +111,17 @@ public class Game implements Runnable{
     }
 
     public void update() {
-        if (!isPlaying) {
-            menu.update();
-        } else if (play != null) {
-            play.update();
+        switch (gameState) {
+            case MENU -> {
+                if (menu != null) {
+                    menu.update();
+                }
+            }
+            case PLAYING -> {
+                if (play != null) {
+                    play.update();
+                }
+            }
         }
     }
 
