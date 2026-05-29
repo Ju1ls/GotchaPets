@@ -17,10 +17,9 @@ public class Pet implements Serializable {
 
     private final long DECAY_INTERVAL = 150000L;
     private final long MAX_COOLDOWN_TIME = 86400000L;
-    private final long SLEEP_DURATION = 28800000L;
+    private final long FIVE_HOUR_COOLDOWN = 18000000L;
 
     private boolean isSleeping = false;
-    private long wakeUpTime = 0;
 
     private long lastDecayTime;
     private long hungerCooldown = 0;
@@ -37,7 +36,7 @@ public class Pet implements Serializable {
     public void feed() {
         hunger = Math.min(100, hunger + 20);
         if (hunger == 100) {
-            hungerCooldown = System.currentTimeMillis() + MAX_COOLDOWN_TIME;
+            hungerCooldown = System.currentTimeMillis() + FIVE_HOUR_COOLDOWN;
         }
     }
 
@@ -54,7 +53,7 @@ public class Pet implements Serializable {
     public void love() {
         love = Math.min(100, love + 20);
         if (love == 100) {
-            loveCooldown = System.currentTimeMillis() + MAX_COOLDOWN_TIME;
+            loveCooldown = System.currentTimeMillis() + FIVE_HOUR_COOLDOWN;
         }
     }
 
@@ -64,8 +63,12 @@ public class Pet implements Serializable {
 
         while (currentTime - lastDecayTime >= DECAY_INTERVAL) {
 
-            if (currentTime > hungerCooldown) hunger = Math.max(0, hunger - 1);
-            if (currentTime > loveCooldown) love = Math.max(0, love - 1);
+            if (currentTime > hungerCooldown) {
+                hunger = Math.max(0, hunger - 1);
+            }
+            if (currentTime > loveCooldown) {
+                love = Math.max(0, love - 1);
+            }
 
             if (isSleeping) {
                 energy = Math.min(100, energy + 1);
@@ -76,7 +79,9 @@ public class Pet implements Serializable {
                     energyCooldown = currentTime + MAX_COOLDOWN_TIME;
                 }
             } else {
-                if (currentTime > energyCooldown) energy = Math.max(0, energy - 1);
+                if (currentTime > energyCooldown) {
+                    energy = Math.max(0, energy - 1);
+                }
             }
 
             lastDecayTime += DECAY_INTERVAL;
