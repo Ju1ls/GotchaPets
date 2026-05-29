@@ -7,12 +7,10 @@ import cz.jull.gamestates.StateMethods;
 import cz.jull.ui.BackgroundUI;
 import cz.jull.ui.UtilsUI;
 import cz.jull.utils.Constants;
-import cz.jull.utils.LoadSave;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
-import java.awt.image.BufferedImage;
 
 public class MenuState extends State implements StateMethods {
     private CreditsScreen creditsScreen;

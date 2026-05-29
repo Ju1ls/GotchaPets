@@ -1,7 +1,5 @@
 package cz.jull.gamestates.gacha;
 
-import cz.jull.gamestates.menu.MenuPanel;
-
 import javax.swing.*;
 import java.awt.*;
 

@@ -14,9 +14,6 @@ import cz.jull.gamestates.playing.PlayPanel;
 import cz.jull.gamestates.playing.PlayState;
 import cz.jull.gamestates.playing.PlayWindow;
 import cz.jull.logic.Player;
-import cz.jull.logic.pet.Pet;
-import cz.jull.logic.pet.PetSpecies;
-import cz.jull.logic.pet.PetType;
 import cz.jull.utils.SaveManager;
 
 public class Game implements Runnable{

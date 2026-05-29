@@ -1,7 +1,6 @@
 package cz.jull.logic;
 
 import cz.jull.logic.pet.Pet;
-import cz.jull.utils.SaveManager;
 
 import java.io.Serial;
 import java.io.Serializable;

@@ -1,7 +1,6 @@
 package cz.jull.gamestates.pet_list;
 
 import cz.jull.Game;
-import cz.jull.inputs.MenuInputs;
 import cz.jull.inputs.PetListInputs;
 import cz.jull.utils.Constants;
 
