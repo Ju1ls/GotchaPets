@@ -6,18 +6,33 @@ import java.io.IOException;
 import java.io.InputStream;
 
 public class LoadSave {
-    public static final String MENU_BUTTONS = "menu_buttons.png";
     public static final String MENU_BACKGROUND = "menu_background.png";
+    public static final String HOME_BACKGROUND = "home_background.png";
+    public static final String WATER_BACKGROUND = "water_background.png";
 
     public static final String CREDITS_TITLE = "credits_title.png";
     public static final String CREDITS_FOREGROUND = "foreground.png";
 
+    public static final String MENU_BUTTONS = "menu_buttons.png";
     public static final String BACK_BUTTON = "back_button.png";
     public static final String GAME_BUTTONS = "game_buttons.png";
+    public static final String GACHA_BUTTONS = "gacha_buttons.png";
+
+    public static final String HOME_BANNER_GACHA = "home_gacha_banner.png";
+    public static final String WATER_BANNER_GACHA = "water_gacha_banner.png";
+
+    public static final String PET_LIST = "pet_list.png";
+
     public static final String PET_HEALTH_STATES = "pet_health_states.png";
     public static final String CURRENCY = "coin_background.png";
 
     public static final String DEFAULT_PET_SPRITES = "default_pet_sprites.png";
+    public static final String HAMSTER_RABBIT_SPRITES = "hamster_rabbit_sprites.png";
+    public static final String PARROT_SPRITES = "parrot_sprites.png";
+    public static final String JELLYFISH_SEAL_SPRITES = "jellyfish_seal_sprites.png";
+    public static final String OCTOPUS_TURTLE_SPRITES = "octopus_turtle_sprites.png";
+    public static final String SHARK_SPRITES = "shark_sprites.png";
+
     public static final String PET_BED = "pet_bed.png";
 
     public static BufferedImage getSpriteAtlas(String fileName) {

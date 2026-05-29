@@ -10,18 +10,20 @@ import java.awt.image.BufferedImage;
 public class BackgroundUI {
     private BufferedImage homeBgImg;
     private BufferedImage waterBgImg;
-    private BufferedImage forestBgImg;
+    private BufferedImage menuBgImg;
 
     public BackgroundUI() {
-        //loadImages();
+        loadImages();
     }
 
     private void loadImages() {
-        homeBgImg = LoadSave.getSpriteAtlas(LoadSave.MENU_BACKGROUND);
+        homeBgImg = LoadSave.getSpriteAtlas(LoadSave.HOME_BACKGROUND);
+        waterBgImg = LoadSave.getSpriteAtlas(LoadSave.WATER_BACKGROUND);
+        menuBgImg = LoadSave.getSpriteAtlas(LoadSave.MENU_BACKGROUND);
     }
 
     public void drawMenu(Graphics g) {
-        g.drawImage(homeBgImg, 0, 0, Constants.GAME_WIDTH, Constants.GAME_HEIGHT, null);
+        g.drawImage(menuBgImg, 0, 0, Constants.GAME_WIDTH, Constants.GAME_HEIGHT, null);
     }
 
     public void drawPlay(Graphics g, PetType type) {
@@ -34,11 +36,6 @@ public class BackgroundUI {
             case WATER -> {
                 if (waterBgImg != null) {
                     g.drawImage(waterBgImg, 0, 0, Constants.GAME_WIDTH, Constants.GAME_HEIGHT, null);
-                }
-            }
-            case FOREST -> {
-                if (forestBgImg != null) {
-                    g.drawImage(forestBgImg, 0, 0, Constants.GAME_WIDTH, Constants.GAME_HEIGHT, null);
                 }
             }
             default -> {

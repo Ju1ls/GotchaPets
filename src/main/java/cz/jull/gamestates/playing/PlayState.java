@@ -9,13 +9,11 @@ import cz.jull.logic.pet.PetSpecies;
 import cz.jull.logic.pet.PetType;
 import cz.jull.ui.*;
 import cz.jull.utils.Constants;
-import cz.jull.utils.LoadSave;
 import cz.jull.utils.SaveManager;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
-import java.awt.image.BufferedImage;
 
 public class PlayState extends State implements StateMethods {
     // Buttons
@@ -225,11 +223,11 @@ public class PlayState extends State implements StateMethods {
             }
 
             if (gachaButton.isMouseOver() && gachaButton.isMousePressed()) {
-                // Open Gacha
+                game.startGacha();
             }
 
             if (listButton.isMouseOver() && listButton.isMousePressed()) {
-                // Open Pet List
+                game.startPetList();
             }
 
             for (Button button : buttons) {

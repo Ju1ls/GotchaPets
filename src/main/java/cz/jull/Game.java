@@ -1,13 +1,22 @@
 package cz.jull;
 
 import cz.jull.gamestates.GameState;
+import cz.jull.gamestates.gacha.GachaPanel;
+import cz.jull.gamestates.gacha.GachaState;
+import cz.jull.gamestates.gacha.GachaWindow;
 import cz.jull.gamestates.menu.MenuState;
 import cz.jull.gamestates.menu.MenuPanel;
 import cz.jull.gamestates.menu.MenuWindow;
+import cz.jull.gamestates.pet_list.PetListPanel;
+import cz.jull.gamestates.pet_list.PetListState;
+import cz.jull.gamestates.pet_list.PetListWindow;
 import cz.jull.gamestates.playing.PlayPanel;
 import cz.jull.gamestates.playing.PlayState;
 import cz.jull.gamestates.playing.PlayWindow;
 import cz.jull.logic.Player;
+import cz.jull.logic.pet.Pet;
+import cz.jull.logic.pet.PetSpecies;
+import cz.jull.logic.pet.PetType;
 import cz.jull.utils.SaveManager;
 
 public class Game implements Runnable{
@@ -20,6 +29,14 @@ public class Game implements Runnable{
     private PlayWindow playWindow;
     private PlayPanel playPanel;
     private PlayState play;
+
+    private GachaWindow gachaWindow;
+    private GachaPanel gachaPanel;
+    private GachaState gacha;
+
+    private PetListWindow petListWindow;
+    private PetListPanel petListPanel;
+    private PetListState petList;
 
     private Thread gameThread;
 
@@ -61,6 +78,26 @@ public class Game implements Runnable{
         gameState = GameState.PLAYING;
     }
 
+    public void startGacha() {
+        playWindow.closeWindow();
+
+        gacha = new GachaState(this);
+        gachaPanel = new GachaPanel(this);
+        gachaWindow = new GachaWindow(gachaPanel);
+
+        gameState = GameState.GACHA;
+    }
+
+    public void startPetList() {
+        playWindow.closeWindow();
+
+        petList = new PetListState(this);
+        petListPanel = new PetListPanel(this);
+        petListWindow = new PetListWindow(petListPanel);
+
+        gameState = GameState.PET_LIST;
+    }
+
     public void returnToMenu() {
         if (playWindow != null) {
             playWindow.closeWindow();
@@ -68,6 +105,21 @@ public class Game implements Runnable{
 
         menuWindow = new MenuWindow(menuPanel);
         gameState = GameState.MENU;
+    }
+
+    public void returnToPlaying() {
+        if (gachaWindow != null) {
+            gachaWindow.closeWindow();
+            gachaWindow = null;
+        }
+
+        if (petListWindow != null) {
+            petListWindow.closeWindow();
+            petListWindow = null;
+        }
+
+        playWindow = new PlayWindow(playPanel);
+        gameState = GameState.PLAYING;
     }
 
     @Override
@@ -104,6 +156,16 @@ public class Game implements Runnable{
                             playPanel.repaint();
                         }
                     }
+                    case GACHA -> {
+                        if (gachaPanel != null) {
+                            gachaPanel.repaint();
+                        }
+                    }
+                    case PET_LIST -> {
+                        if (petListPanel != null) {
+                            petListPanel.repaint();
+                        }
+                    }
                 }
                 deltaF--;
             }
@@ -122,6 +184,16 @@ public class Game implements Runnable{
                     play.update();
                 }
             }
+            case GACHA -> {
+                if (gacha != null) {
+                    gacha.update();
+                }
+            }
+            case PET_LIST -> {
+                if (petList != null) {
+                    petList.update();
+                }
+            }
         }
     }
 
@@ -131,6 +203,14 @@ public class Game implements Runnable{
 
     public PlayState getPlay() {
         return play;
+    }
+
+    public GachaState getGacha() {
+        return gacha;
+    }
+
+    public PetListState getPetList() {
+        return petList;
     }
 
     public Player getPlayer() {

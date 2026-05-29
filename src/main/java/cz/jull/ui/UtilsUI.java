@@ -21,6 +21,21 @@ public class UtilsUI {
         return new Button(x, y, backButtonWidth, backButtonHeight, backImgs);
     }
 
+    public static Button createGachaButton(int x, int y, int rowIndex) {
+        BufferedImage spriteSheet = LoadSave.getSpriteAtlas(LoadSave.GACHA_BUTTONS);
+
+        int width = Constants.BUTTON_WIDTH_BACK;
+        int height = Constants.BUTTON_DEFAULT_HEIGHT;
+
+        BufferedImage[] imgs = new BufferedImage[3];
+
+        for (int i = 0; i < 3; i++) {
+            imgs[i] = spriteSheet.getSubimage(i * width, rowIndex * height, width, height);
+        }
+
+        return new Button(x, y, width, height, imgs);
+    }
+
     public static Button createGameButton(int x, int y, int rowIndex) {
         BufferedImage spriteSheet = LoadSave.getSpriteAtlas(LoadSave.GAME_BUTTONS);
 

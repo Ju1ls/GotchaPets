@@ -26,8 +26,11 @@ public class CreditsScreen implements StateMethods {
     }
 
     private void loadImages() {
-        titleImg = LoadSave.getSpriteAtlas(LoadSave.CREDITS_TITLE);
-        foregroundImg = LoadSave.getSpriteAtlas(LoadSave.CREDITS_FOREGROUND);
+        BufferedImage img = LoadSave.getSpriteAtlas(LoadSave.CREDITS_TITLE);
+        titleImg = img.getSubimage(380, 20, Constants.CREDITS_TITLE_WIDTH, Constants.BUTTON_DEFAULT_HEIGHT);
+
+        BufferedImage img2 = LoadSave.getSpriteAtlas(LoadSave.CREDITS_FOREGROUND);
+        foregroundImg = img2.getSubimage(20, 185, Constants.PET_LIST_WIDTH, Constants.PET_LIST_HEIGHT);
     }
 
     @Override
@@ -42,16 +45,16 @@ public class CreditsScreen implements StateMethods {
         g.fillRect(0,0, Constants.GAME_WIDTH, Constants.GAME_HEIGHT);
 
         // Foreground
-        int foregroundWidth = Constants.GAME_WIDTH;
-        int foregroundHeight = Constants.GAME_HEIGHT;
+        int foregroundWidth = Constants.PET_LIST_WIDTH;
+        int foregroundHeight = Constants.PET_LIST_HEIGHT;
 
-        g.drawImage(foregroundImg, 0, 0, foregroundWidth, foregroundHeight, null);
+        g.drawImage(foregroundImg, 20, 185, foregroundWidth, foregroundHeight, null);
 
         // Title
-        int titleWidth = Constants.GAME_WIDTH;
-        int titleHeight = Constants.GAME_HEIGHT;
+        int titleWidth = Constants.CREDITS_TITLE_WIDTH;
+        int titleHeight = Constants.BUTTON_DEFAULT_HEIGHT;
 
-        g.drawImage(titleImg, 0, 0, titleWidth, titleHeight, null);
+        g.drawImage(titleImg, 380, 20, titleWidth, titleHeight, null);
 
         // Button
         backButton.draw(g);

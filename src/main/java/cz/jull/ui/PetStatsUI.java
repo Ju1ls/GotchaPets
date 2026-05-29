@@ -64,10 +64,18 @@ public class PetStatsUI {
     }
 
     private int getColorRow(int statValue) {
-        if (statValue >= 81) return Constants.STATE_GREEN;
-        if (statValue >= 61) return Constants.STATE_LIGHT_GREEN;
-        if (statValue >= 41) return Constants.STATE_YELLOW;
-        if (statValue >= 21) return Constants.STATE_ORANGE;
+        if (statValue >= 81) {
+            return Constants.STATE_GREEN;
+        }
+        if (statValue >= 61) {
+            return Constants.STATE_LIGHT_GREEN;
+        }
+        if (statValue >= 41) {
+            return Constants.STATE_YELLOW;
+        }
+        if (statValue >= 21) {
+            return Constants.STATE_ORANGE;
+        }
         return Constants.STATE_RED;
     }
 }
