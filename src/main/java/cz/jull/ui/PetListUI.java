@@ -11,6 +11,7 @@ import java.util.List;
 
 public class PetListUI {
     private BufferedImage petListImg;
+    private BufferedImage petNotOwned;
 
     PetSpecies[] slotSpecies = {
             PetSpecies.CAT, PetSpecies.DOG, PetSpecies.RABBIT, PetSpecies.HAMSTER, PetSpecies.PARROT,
@@ -27,6 +28,9 @@ public class PetListUI {
     private void loadImages() {
         BufferedImage img = LoadSave.getSpriteAtlas(LoadSave.PET_LIST);
         petListImg = img.getSubimage(0, 0, Constants.PET_LIST_WIDTH, Constants.PET_LIST_HEIGHT);
+
+        BufferedImage img2 = LoadSave.getSpriteAtlas(LoadSave.PET_NOT_OWNED);
+        petNotOwned = img2.getSubimage(0,0, Constants.PET_FRAME_WIDTH, Constants.PET_FRAME_HEIGHT);
     }
 
     public void draw(Graphics g, List<Pet> inventory) {
@@ -45,8 +49,11 @@ public class PetListUI {
         int cols = 5;
         int xOffsetStart = 90 + imgX;
         int yOffsetStart = 275 + imgY;
-        int xSpacing = 320; // Horizontal gap between pets
-        int ySpacing = 345; // Vertical gap between rows
+        int xSpacing = 320;
+        int ySpacing = 345;
+
+        int frameXStart = 70;
+        int frameYStart = 235;
 
         for (int i = 0; i < 10; i++) {
 
@@ -58,12 +65,25 @@ public class PetListUI {
                 }
             }
 
+            int row = i / cols;
+            int col = i % cols;
+
+            int xCorrection = 0;
+            if (col == 3 || col == 4) {
+                xCorrection = -5;
+            }
+
             if (petToDraw != null) {
-                int row = i / cols;
-                int col = i % cols;
-                int drawX = xOffsetStart + (col * xSpacing);
+                int drawX = xOffsetStart + (col * xSpacing) + xCorrection;
                 int drawY = yOffsetStart + (row * ySpacing);
                 drawMiniStats(g, petToDraw, drawX, drawY);
+            } else {
+                int frameX = frameXStart + (col * xSpacing) + xCorrection;
+                int frameY = frameYStart + (row * ySpacing);
+
+                if (petNotOwned != null) {
+                    g.drawImage(petNotOwned, frameX, frameY, Constants.PET_FRAME_WIDTH, Constants.PET_FRAME_HEIGHT, null);
+                }
             }
         }
     }

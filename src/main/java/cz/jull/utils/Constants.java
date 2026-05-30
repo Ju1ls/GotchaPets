@@ -30,6 +30,9 @@ public class Constants {
     public static final int PET_LIST_WIDTH = 1560;
     public static final int PET_LIST_HEIGHT = 695;
 
+    public static final int PET_FRAME_WIDTH = 220;
+    public static final int PET_FRAME_HEIGHT = 235;
+
     // Credits
     public static final int CREDITS_TITLE_WIDTH = 1200;
 
@@ -61,7 +64,7 @@ public class Constants {
     public static final int HAMSTER_WIDTH = 375;
     public static final int HAMSTER_HEIGHT = 400;
 
-    public static final int PARROT_WIDTH = 300;
+    public static final int PARROT_WIDTH = 295;
     public static final int PARROT_HEIGHT = 510;
 
     // WATER

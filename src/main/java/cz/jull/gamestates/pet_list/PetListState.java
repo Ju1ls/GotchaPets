@@ -52,10 +52,6 @@ public class PetListState extends State implements StateMethods {
                 button.draw(g);
             }
         }
-
-        for (int i = 0; i < game.getPlayer().getInventory().size(); i++) {
-            Rectangle box = getPetHitbox(i);
-        }
     }
 
     private void loadButtons() {
@@ -76,7 +72,12 @@ public class PetListState extends State implements StateMethods {
         int row = index / cols;
         int col = index % cols;
 
-        int x = xOffsetStart + (col * xSpacing);
+        int xCorrection = 0;
+        if (col == 3 || col == 4) {
+            xCorrection = -5;
+        }
+
+        int x = xOffsetStart + (col * xSpacing) + xCorrection;
         int y = yOffsetStart + (row * ySpacing);
 
         return new Rectangle(x, y, hitboxWidth, hitboxHeight);

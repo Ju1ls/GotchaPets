@@ -22,6 +22,7 @@ public class LoadSave {
     public static final String WATER_BANNER_GACHA = "water_gacha_banner.png";
 
     public static final String PET_LIST = "pet_list.png";
+    public static final String PET_NOT_OWNED = "pet_not_owned.png";
 
     public static final String PET_HEALTH_STATES = "pet_health_states.png";
     public static final String CURRENCY = "coin_background.png";
