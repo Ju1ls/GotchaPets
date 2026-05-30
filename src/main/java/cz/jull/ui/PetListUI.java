@@ -9,6 +9,10 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.List;
 
+/**
+ * Handles the visual rendering of the player's pet inventory screen.
+ * Displays owned pets alongside their basic stats, and placeholders for unowned pets.
+ */
 public class PetListUI {
     private BufferedImage petListImg;
     private BufferedImage petNotOwned;
@@ -21,10 +25,17 @@ public class PetListUI {
     int imgX = 20;
     int imgY = 185;
 
+    /**
+     * Constructs the PetListUI and pre-loads its required images.
+     */
     public PetListUI() {
         loadImages();
     }
 
+    /**
+     * Loads the image assets required for the pet list inventory interface.
+     * Extracts the main inventory background and the placeholder frame used for unowned pets.
+     */
     private void loadImages() {
         BufferedImage img = LoadSave.getSpriteAtlas(LoadSave.PET_LIST);
         petListImg = img.getSubimage(0, 0, Constants.PET_LIST_WIDTH, Constants.PET_LIST_HEIGHT);
@@ -33,6 +44,12 @@ public class PetListUI {
         petNotOwned = img2.getSubimage(0,0, Constants.PET_FRAME_WIDTH, Constants.PET_FRAME_HEIGHT);
     }
 
+    /**
+     * Draws the inventory UI overlay and populates the grid slots based on the player's ownership.
+     *
+     * @param g         The Graphics context used for drawing.
+     * @param inventory A list of pets currently owned by the player.
+     */
     public void draw(Graphics g, List<Pet> inventory) {
         // Background
         g.setColor(new Color(89, 198, 255));
@@ -88,6 +105,14 @@ public class PetListUI {
         }
     }
 
+    /**
+     * Draws simplified, color-coded squares representing the pet's current stats underneath their portrait.
+     *
+     * @param g   The Graphics context.
+     * @param pet The pet whose stats are being drawn.
+     * @param x   The X coordinate for the mini stats box.
+     * @param y   The Y coordinate for the mini stats box.
+     */
     private void drawMiniStats(Graphics g, Pet pet, int x, int y) {
         g.setColor(Color.WHITE);
         g.fillRect(x, y, 160, 45);
@@ -106,6 +131,12 @@ public class PetListUI {
         g.fillRect(x + 110, y + 5, 45, 35);
     }
 
+    /**
+     * Maps a stat value (0-100) to an RGB color used in the mini stats box.
+     *
+     * @param statValue The pet's stat value.
+     * @return A Color representing the health/quality of the stat.
+     */
     private Color getStatColor(int statValue) {
         if (statValue >= 81) {
             return new Color(72, 210, 110);

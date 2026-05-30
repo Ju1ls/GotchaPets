@@ -5,6 +5,10 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
 
+/**
+ * A utility class housing all image resource path constants and a centralized method
+ * for loading Image resources from the application's classpath.
+ */
 public class LoadSave {
     public static final String MENU_BACKGROUND = "menu_background.png";
     public static final String HOME_BACKGROUND = "home_background.png";
@@ -36,6 +40,12 @@ public class LoadSave {
 
     public static final String PET_BED = "pet_bed.png";
 
+    /**
+     * Loads a BufferedImage from the classpath.
+     *
+     * @param fileName The exact file name of the resource (e.g., "menu_background.png").
+     * @return The loaded BufferedImage, or null if the file cannot be read.
+     */
     public static BufferedImage getSpriteAtlas(String fileName) {
         BufferedImage img = null;
         try (InputStream is = LoadSave.class.getResourceAsStream("/" + fileName)) {

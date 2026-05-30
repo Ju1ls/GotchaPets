@@ -3,10 +3,18 @@ package cz.jull.gamestates.pet_list;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * The JFrame window that houses the pet list (inventory) panel.
+ */
 public class PetListWindow {
 
     private JFrame jframe;
 
+    /**
+     * Constructs the PetListWindow and sets it to full screen.
+     *
+     * @param petListPanel The JPanel containing the inventory content.
+     */
     public PetListWindow(PetListPanel petListPanel) {
         this.jframe = new JFrame();
 
@@ -27,6 +35,9 @@ public class PetListWindow {
         this.jframe.setVisible(true);
     }
 
+    /**
+     * Closes and disposes of the window.
+     */
     public void closeWindow() {
         jframe.dispose();
     }

@@ -7,14 +7,24 @@ import cz.jull.utils.LoadSave;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
+/**
+ * Handles rendering the active banner graphics for the gacha system.
+ */
 public class BannerUI {
     private BufferedImage homeBanner;
     private BufferedImage waterBanner;
 
+    /**
+     * Constructs the BannerUI and pre-loads the banner image overlays.
+     */
     public BannerUI() {
         loadImages();
     }
 
+    /**
+     * Loads the full-size promotional banner images used in the gacha rolling screen.
+     * Extracts both the home and water environment banners.
+     */
     private void loadImages() {
         BufferedImage img = LoadSave.getSpriteAtlas(LoadSave.HOME_BANNER_GACHA);
         homeBanner = img.getSubimage(0, 0, 1560, 860);
@@ -23,6 +33,12 @@ public class BannerUI {
         waterBanner = img2.getSubimage(0, 0, 1560, 860);
     }
 
+    /**
+     * Draws the gacha banner corresponding to the currently selected pet type.
+     *
+     * @param g The Graphics context used for drawing.
+     * @param currentBannerType The PetType of the currently active banner.
+     */
     public void draw(Graphics g, PetType currentBannerType) {
         int x = 20;
         int y = 20;

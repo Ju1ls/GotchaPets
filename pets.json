@@ -1,0 +1,12 @@
+[
+  { "name": "Cat", "type": "HOME", "species": "CAT", "rarity": 1 },
+  { "name": "Golden Retriever", "type": "HOME", "species": "DOG", "rarity": 1 },
+  { "name": "Rabbit", "type": "HOME", "species": "RABBIT", "rarity": 2 },
+  { "name": "Hamster", "type": "HOME", "species": "HAMSTER", "rarity": 2 },
+  { "name": "Parrot", "type": "HOME", "species": "PARROT", "rarity": 3 },
+  { "name": "Octopus", "type": "WATER", "species": "OCTOPUS", "rarity": 1 },
+  { "name": "Shark", "type": "WATER", "species": "SHARK", "rarity": 1 },
+  { "name": "Seal", "type": "WATER", "species": "SEAL", "rarity": 2 },
+  { "name": "Turtle", "type": "WATER", "species": "TURTLE", "rarity": 2 },
+  { "name": "Jellyfish", "type": "WATER", "species": "JELLYFISH", "rarity": 3 }
+]

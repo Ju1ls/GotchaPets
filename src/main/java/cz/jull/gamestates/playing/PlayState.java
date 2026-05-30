@@ -6,7 +6,6 @@ import cz.jull.gamestates.StateMethods;
 import cz.jull.gamestates.Button;
 import cz.jull.logic.pet.Pet;
 import cz.jull.logic.pet.PetSpecies;
-import cz.jull.logic.pet.PetType;
 import cz.jull.ui.*;
 import cz.jull.utils.Constants;
 import cz.jull.utils.SaveManager;
@@ -14,7 +13,11 @@ import cz.jull.utils.SaveManager;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import java.util.List;
 
+/**
+ * Manages the main gameplay loop, including pet interactions, stats decay, and UI interactions.
+ */
 public class PlayState extends State implements StateMethods {
     // Buttons
     private Button backButton;
@@ -42,9 +45,13 @@ public class PlayState extends State implements StateMethods {
     // Backgrounds
     private BackgroundUI backgroundUI;
 
-    private int tickCount = 0;
-    private final int DECAY_RATE_TICKS = 1000;
+    private List<Pet> allAvailablePets;
 
+    /**
+     * Constructs the main play state.
+     *
+     * @param game The main game instance.
+     */
     public PlayState(Game game) {
         super(game);
 
@@ -53,8 +60,17 @@ public class PlayState extends State implements StateMethods {
         currencyUI = new CurrencyUI();
         petRenderer = new PetRenderer();
         loadButtons();
+
+        allAvailablePets = game.getPetCatalog();
     }
 
+    /**
+     * {@inheritDoc}
+     * <p>
+     * Specifically updates the currently equipped pet's status, handles stat decay over time,
+     * manages action timers for animations, and updates UI button states.
+     * </p>
+     */
     @Override
     public void update() {
         Pet currentPet = game.getPlayer().getEquippedPet();
@@ -82,6 +98,13 @@ public class PlayState extends State implements StateMethods {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     * <p>
+     * Renders either the initial pet selection screen (if no pet is equipped) or the main
+     * interactive play screen with the background, UI elements, and the pet itself.
+     * </p>
+     */
     @Override
     public void draw(Graphics g) {
         Pet currentPet = game.getPlayer().getEquippedPet();
@@ -93,6 +116,9 @@ public class PlayState extends State implements StateMethods {
         }
     }
 
+    /**
+     * Initializes all the interactive buttons for the play state.
+     */
     private void loadButtons() {
         backButton = UtilsUI.createBackButton(20, 20);
         gachaButton = UtilsUI.createGameButton(390, 20, 1);
@@ -107,6 +133,11 @@ public class PlayState extends State implements StateMethods {
         buttons = new Button[] {backButton, gachaButton, listButton, feedButton, sleepButton, loveButton};
     }
 
+    /**
+     * Draws the initial pet selection screen if the player hasn't picked a starter pet.
+     *
+     * @param g The Graphics object used for drawing.
+     */
     private void drawSelectionScreen(Graphics g) {
         // Background
         g.setColor(new Color(89, 198, 255));
@@ -128,6 +159,12 @@ public class PlayState extends State implements StateMethods {
         g.drawImage(petRenderer.getIdleSprite(PetSpecies.DOG), dogX, 215, Constants.DOG_WIDTH, Constants.DOG_HEIGHT, null);
     }
 
+    /**
+     * Draws the main gameplay interface and pet.
+     *
+     * @param g The Graphics object used for drawing.
+     * @param currentPet The currently equipped pet.
+     */
     private void drawPlayScreen(Graphics g, Pet currentPet) {
         currentPet = game.getPlayer().getEquippedPet();
 
@@ -151,6 +188,27 @@ public class PlayState extends State implements StateMethods {
         petRenderer.draw(g, currentPet, actionSpriteIndex);
     }
 
+    /**
+     * Retrieves a pet from the global catalog by its name.
+     *
+     * @param name The name of the pet to find.
+     * @return The Pet object if found, otherwise null.
+     */
+    private Pet getPetFromCatalog(String name) {
+        for (Pet pet : allAvailablePets) {
+            if (pet.getName().equals(name)) {
+                return pet;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * {@inheritDoc}
+     * <p>
+     * Detects initial left-clicks to press down UI buttons within the play screen.
+     * </p>
+     */
     @Override
     public void mousePressed(MouseEvent e) {
         if (e.getButton() == MouseEvent.BUTTON1) {
@@ -162,6 +220,13 @@ public class PlayState extends State implements StateMethods {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     * <p>
+     * Triggers actions when a mouse click is released, such as selecting a starter pet,
+     * interacting with the current pet (feed, sleep, love), or navigating to other game states.
+     * </p>
+     */
     @Override
     public void mouseReleased(MouseEvent e) {
         if (e.getButton() == MouseEvent.BUTTON1) {
@@ -178,14 +243,20 @@ public class PlayState extends State implements StateMethods {
             if (currentPet == null) {
                 int catX = (Constants.GAME_WIDTH / 2) - 350;
                 if (mouseX >= catX && mouseX <= catX + 315 && mouseY >= 200 && mouseY <= 600) {
-                    game.getPlayer().setEquippedPet(new Pet("Cat", PetType.HOME, PetSpecies.CAT));
-                    SaveManager.saveGame(game.getPlayer());
+                    Pet starterCat = getPetFromCatalog("Cat");
+                    if (starterCat != null) {
+                        game.getPlayer().setEquippedPet(starterCat);
+                        SaveManager.saveGame(game.getPlayer());
+                    }
                 }
 
                 int dogX = (Constants.GAME_WIDTH / 2) + 50;
                 if (mouseX >= dogX && mouseX <= dogX + 265 && mouseY >= 200 && mouseY <= 730) {
-                    game.getPlayer().setEquippedPet(new Pet("Golden Retriever", PetType.HOME, PetSpecies.DOG));
-                    SaveManager.saveGame(game.getPlayer());
+                    Pet starterDog = getPetFromCatalog("Golden Retriever");
+                    if (starterDog != null) {
+                        game.getPlayer().setEquippedPet(starterDog);
+                        SaveManager.saveGame(game.getPlayer());
+                    }
                 }
                 return;
             }
@@ -238,6 +309,12 @@ public class PlayState extends State implements StateMethods {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     * <p>
+     * Tracks the mouse position to update the hover state of interactive UI buttons.
+     * </p>
+     */
     @Override
     public void mouseMoved(MouseEvent e) {
         for (Button button : buttons) {
@@ -254,16 +331,28 @@ public class PlayState extends State implements StateMethods {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     * <p>Unused in the Play state.</p>
+     */
     @Override
     public void KeyPressed(KeyEvent e) {
 
     }
 
+    /**
+     * {@inheritDoc}
+     * <p>Unused in the Play state.</p>
+     */
     @Override
     public void KeyReleased(KeyEvent e) {
 
     }
 
+    /**
+     * {@inheritDoc}
+     * <p>Unused in the Play state.</p>
+     */
     @Override
     public void mouseClicked(MouseEvent e) {
 

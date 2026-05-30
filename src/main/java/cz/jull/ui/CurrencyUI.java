@@ -6,14 +6,24 @@ import cz.jull.utils.LoadSave;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
+/**
+ * Handles rendering the player's current coin total on screen.
+ */
 public class CurrencyUI {
     private BufferedImage currency;
     private BufferedImage currencyBackground;
 
+    /**
+     * Constructs the CurrencyUI and pre-loads the background and coin images.
+     */
     public CurrencyUI() {
         loadImages();
     }
 
+    /**
+     * Loads and slices the currency UI assets from the sprite atlas.
+     * Extracts the background panel for the currency display and the individual coin icon.
+     */
     private void loadImages() {
         BufferedImage img = LoadSave.getSpriteAtlas(LoadSave.CURRENCY);
 
@@ -26,6 +36,12 @@ public class CurrencyUI {
         currency = img.getSubimage(coinXOffset, 0, coinSize, coinSize);
     }
 
+    /**
+     * Draws the currency box and the text representing the player's coin balance.
+     *
+     * @param g     The Graphics context used for drawing.
+     * @param coins The player's total amount of coins.
+     */
     public void draw(Graphics g, int coins) {
         int backgroundX = Constants.GAME_WIDTH - 435;
         int backgroundY = 20;

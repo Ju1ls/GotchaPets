@@ -1,5 +1,10 @@
 package cz.jull.utils;
 
+/**
+ * A central repository for global game constants.
+ * This class includes dimensional constants for UI elements, sprite mappings,
+ * state flags, and game scaling parameters.
+ */
 public class Constants {
     //Buttons
     public static final int BUTTON_DEFAULT_HEIGHT = 145;

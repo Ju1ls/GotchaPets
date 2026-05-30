@@ -3,10 +3,18 @@ package cz.jull.gamestates.gacha;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * The JFrame window that houses the gacha panel.
+ */
 public class GachaWindow {
 
     private JFrame jframe;
 
+    /**
+     * Constructs the GachaWindow and sets it to full screen.
+     *
+     * @param gachaPanel The JPanel containing the gacha content.
+     */
     public GachaWindow(GachaPanel gachaPanel) {
         this.jframe = new JFrame();
 
@@ -27,6 +35,9 @@ public class GachaWindow {
         this.jframe.setVisible(true);
     }
 
+    /**
+     * Closes and disposes of the window.
+     */
     public void closeWindow() {
         jframe.dispose();
     }

@@ -3,10 +3,18 @@ package cz.jull.gamestates.menu;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * The JFrame window that houses the main menu panel.
+ */
 public class MenuWindow {
 
     private JFrame jframe;
 
+    /**
+     * Constructs the MenuWindow and sets it to full screen.
+     *
+     * @param menuPanel The JPanel containing the menu content.
+     */
     public MenuWindow(MenuPanel menuPanel) {
         this.jframe = new JFrame();
 
@@ -27,6 +35,9 @@ public class MenuWindow {
         this.jframe.setVisible(true);
     }
 
+    /**
+     * Closes and disposes of the window.
+     */
     public void closeWindow() {
         jframe.dispose();
     }

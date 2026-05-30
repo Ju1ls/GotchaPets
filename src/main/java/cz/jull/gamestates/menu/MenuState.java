@@ -7,19 +7,29 @@ import cz.jull.gamestates.StateMethods;
 import cz.jull.ui.BackgroundUI;
 import cz.jull.ui.UtilsUI;
 import cz.jull.utils.Constants;
+import lombok.Setter;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 
+/**
+ * Manages the main menu state, allowing the player to start the game, view credits, or quit.
+ */
 public class MenuState extends State implements StateMethods {
     private CreditsScreen creditsScreen;
+    @Setter
     private boolean showCredits = false;
 
     private Button[] buttons = new Button[3];
 
     private BackgroundUI backgroundUI;
 
+    /**
+     * Constructs the main menu state.
+     *
+     * @param game The main game instance.
+     */
     public MenuState(Game game) {
         super(game);
         loadButtons();
@@ -27,6 +37,9 @@ public class MenuState extends State implements StateMethods {
         creditsScreen = new CreditsScreen(this);
     }
 
+    /**
+     * Initializes all interactive buttons for the menu screen.
+     */
     private void loadButtons() {
         int srcWidth = Constants.BUTTON_WIDTH_MENU;
         int drawWidth = (int) (srcWidth * Constants.SCALE);
@@ -46,6 +59,12 @@ public class MenuState extends State implements StateMethods {
         buttons[Constants.BUTTON_CREDITS] = UtilsUI.createMenuButton(rightX, yPos, Constants.BUTTON_CREDITS);
     }
 
+    /**
+     * {@inheritDoc}
+     * <p>
+     * Updates either the credits screen sub-state (if visible) or the main menu button states.
+     * </p>
+     */
     @Override
     public void update() {
         if (showCredits) {
@@ -57,6 +76,12 @@ public class MenuState extends State implements StateMethods {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     * <p>
+     * Renders either the credits overlay (if toggled) or the main menu background and buttons.
+     * </p>
+     */
     @Override
     public void draw(Graphics g) {
         if (showCredits) {
@@ -69,6 +94,12 @@ public class MenuState extends State implements StateMethods {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     * <p>
+     * Detects initial left-clicks to press down UI buttons or delegates to the credits screen.
+     * </p>
+     */
     @Override
     public void mousePressed(MouseEvent e) {
         if (showCredits) {
@@ -82,6 +113,12 @@ public class MenuState extends State implements StateMethods {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     * <p>
+     * Processes left-click releases to start the game, exit the application, or show credits.
+     * </p>
+     */
     @Override
     public void mouseReleased(MouseEvent e) {
         if (showCredits) {
@@ -103,6 +140,12 @@ public class MenuState extends State implements StateMethods {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     * <p>
+     * Tracks the mouse position to update the hover state of menu buttons or delegates to the credits screen.
+     * </p>
+     */
     @Override
     public void mouseMoved(MouseEvent e) {
         if (showCredits) {
@@ -121,22 +164,30 @@ public class MenuState extends State implements StateMethods {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     * <p>Unused in the Menu state.</p>
+     */
     @Override
     public void KeyPressed(KeyEvent e) {
 
     }
 
+    /**
+     * {@inheritDoc}
+     * <p>Unused in the Menu state.</p>
+     */
     @Override
     public void KeyReleased(KeyEvent e) {
 
     }
 
+    /**
+     * {@inheritDoc}
+     * <p>Unused in the Menu state.</p>
+     */
     @Override
     public void mouseClicked(MouseEvent e) {
 
-    }
-
-    public void setShowCredits(boolean showCredits) {
-        this.showCredits = showCredits;
     }
 }

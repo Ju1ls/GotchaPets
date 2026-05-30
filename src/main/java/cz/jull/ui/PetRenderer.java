@@ -8,6 +8,10 @@ import cz.jull.utils.LoadSave;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
+/**
+ * Handles the loading and rendering of all pet sprites and their respective environments (beds).
+ * It calculates drawing coordinates based on species-specific dimensions.
+ */
 public class PetRenderer {
     private BufferedImage[] catSprites = new BufferedImage[4];
     private BufferedImage[] dogSprites = new BufferedImage[4];
@@ -24,10 +28,16 @@ public class PetRenderer {
     private BufferedImage petBedImgHome;
     private BufferedImage petBedImgWater;
 
+    /**
+     * Constructs the PetRenderer and pre-loads its image resources.
+     */
     public PetRenderer() {
         loadImages();
     }
 
+    /**
+     * Loads and slices all sprite sheets for pets, effects, and beds.
+     */
     private void loadImages() {
         BufferedImage spriteSheet = LoadSave.getSpriteAtlas(LoadSave.DEFAULT_PET_SPRITES);
         BufferedImage hamsterRabbitSprites = LoadSave.getSpriteAtlas(LoadSave.HAMSTER_RABBIT_SPRITES);
@@ -114,6 +124,13 @@ public class PetRenderer {
         zzzImg = spriteSheet.getSubimage(1260, 0, Constants.ZZZ_WIDTH, Constants.ZZZ_HEIGHT);
     }
 
+    /**
+     * Draws the appropriate pet bed and the pet itself based on its species, type, and current action.
+     *
+     * @param g                 The Graphics context used for drawing.
+     * @param currentPet        The Pet object to render.
+     * @param actionSpriteIndex The index (0-3) representing the pet's current action/animation state.
+     */
     public void draw(Graphics g, Pet currentPet, int actionSpriteIndex) {
         switch (currentPet.getType()) {
             case HOME -> g.drawImage(petBedImgHome, Constants.BED_X_HOME, Constants.BED_Y_HOME, Constants.PET_BED_HOME_WIDTH, Constants.PET_BED_HOME_HEIGHT, null);
@@ -206,6 +223,12 @@ public class PetRenderer {
         }
     }
 
+    /**
+     * Retrieves the default "Idle" sprite for a given species, primarily used in selection screens.
+     *
+     * @param species The PetSpecies to retrieve the sprite for.
+     * @return The idle BufferedImage for the species.
+     */
     public BufferedImage getIdleSprite(PetSpecies species) {
         switch (species) {
             case CAT -> {

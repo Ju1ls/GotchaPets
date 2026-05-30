@@ -14,8 +14,22 @@ import cz.jull.gamestates.playing.PlayPanel;
 import cz.jull.gamestates.playing.PlayState;
 import cz.jull.gamestates.playing.PlayWindow;
 import cz.jull.logic.Player;
+import cz.jull.logic.pet.Pet;
+import cz.jull.utils.PetLoader;
 import cz.jull.utils.SaveManager;
+import lombok.Getter;
+import lombok.Setter;
 
+import java.util.List;
+
+/**
+ * The core engine controller for the application.
+ * Manages the main game loop, tracking the active {@link GameState}, and handles the transition
+ * (swapping Windows/Panels) between different screens. It also retains central references
+ * to the global Pet Catalog and the Player profile.
+ */
+@Getter
+@Setter
 public class Game implements Runnable{
     private Player player;
 
@@ -35,6 +49,8 @@ public class Game implements Runnable{
     private PetListPanel petListPanel;
     private PetListState petList;
 
+    private List<Pet> petCatalog;
+
     private Thread gameThread;
 
     private final int FPS_SET = 120;
@@ -42,7 +58,13 @@ public class Game implements Runnable{
 
     private GameState gameState = GameState.MENU;
 
+    /**
+     * Initializes the central Game engine, loads the pet configurations, retrieves the local
+     * save file (or generates a new player profile), and boots into the main menu state.
+     */
     public Game() {
+        petCatalog = PetLoader.loadPetsFromJson("pets.json");
+
         player = SaveManager.loadGame();
 
         if (player == null) {
@@ -60,11 +82,17 @@ public class Game implements Runnable{
         startGameLoop();
     }
 
+    /**
+     * Instantiates and starts the main Runnable thread executing the game loop.
+     */
     private void startGameLoop() {
         gameThread = new Thread(this);
         gameThread.start();
     }
 
+    /**
+     * Transitions the application from the Menu into the active Play state.
+     */
     public void startGame() {
         menuWindow.closeWindow();
 
@@ -75,6 +103,9 @@ public class Game implements Runnable{
         gameState = GameState.PLAYING;
     }
 
+    /**
+     * Transitions the application into the Gacha rolling state.
+     */
     public void startGacha() {
         playWindow.closeWindow();
 
@@ -85,6 +116,9 @@ public class Game implements Runnable{
         gameState = GameState.GACHA;
     }
 
+    /**
+     * Transitions the application into the Pet List (inventory) viewing state.
+     */
     public void startPetList() {
         playWindow.closeWindow();
 
@@ -95,6 +129,9 @@ public class Game implements Runnable{
         gameState = GameState.PET_LIST;
     }
 
+    /**
+     * Dismantles active substates and returns the application back to the Main Menu.
+     */
     public void returnToMenu() {
         if (playWindow != null) {
             playWindow.closeWindow();
@@ -104,6 +141,9 @@ public class Game implements Runnable{
         gameState = GameState.MENU;
     }
 
+    /**
+     * Dismantles sub-menus (like Gacha or Pet List) and returns to the primary Play state.
+     */
     public void returnToPlaying() {
         if (gachaWindow != null) {
             gachaWindow.closeWindow();
@@ -119,6 +159,10 @@ public class Game implements Runnable{
         gameState = GameState.PLAYING;
     }
 
+    /**
+     * The core application tick loop. Ensures deterministic logic updates bounded by {@code UPS_SET}
+     * and triggers UI repaints bounded by {@code FPS_SET}.
+     */
     @Override
     public void run() {
         double timePerFrame = 1000000000.0 / FPS_SET;
@@ -169,6 +213,9 @@ public class Game implements Runnable{
         }
     }
 
+    /**
+     * Routes the logic tick payload to the currently active GameState object.
+     */
     public void update() {
         switch (gameState) {
             case MENU -> {
@@ -192,25 +239,5 @@ public class Game implements Runnable{
                 }
             }
         }
-    }
-
-    public MenuState getMenu() {
-        return menu;
-    }
-
-    public PlayState getPlay() {
-        return play;
-    }
-
-    public GachaState getGacha() {
-        return gacha;
-    }
-
-    public PetListState getPetList() {
-        return petList;
-    }
-
-    public Player getPlayer() {
-        return player;
     }
 }

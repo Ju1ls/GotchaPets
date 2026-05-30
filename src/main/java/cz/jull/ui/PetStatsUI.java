@@ -7,15 +7,25 @@ import cz.jull.utils.LoadSave;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
+/**
+ * Handles the rendering of the active pet's stats (Hunger, Energy, Love).
+ * Draws dynamic segmented health bars whose colors change based on the current stat values.
+ */
 public class PetStatsUI {
     private BufferedImage[][] statSegments = new BufferedImage[5][3];
     private BufferedImage statBackground;
     private BufferedImage statForeground;
 
+    /**
+     * Constructs the PetStatsUI and pre-loads its image resources.
+     */
     public PetStatsUI() {
         loadImages();
     }
 
+    /**
+     * Loads and slices the stat bar background, foreground overlay, and color segments.
+     */
     private void loadImages() {
         BufferedImage img = LoadSave.getSpriteAtlas(LoadSave.PET_HEALTH_STATES);
 
@@ -35,6 +45,12 @@ public class PetStatsUI {
         statForeground = img.getSubimage(fullBarWidth, 0, fullBarWidth, barHeight);
     }
 
+    /**
+     * Draws the stat frame and the colored inner segments based on the current pet's stats.
+     *
+     * @param g The Graphics context used for drawing.
+     * @param currentPet The currently equipped pet whose stats should be displayed.
+     */
     public void draw(Graphics g, Pet currentPet) {
         if (currentPet == null) return;
 
@@ -63,6 +79,12 @@ public class PetStatsUI {
         g.drawImage(statForeground, startX, startY, drawWidth, drawHeight, null);
     }
 
+    /**
+     * Determines which color segment row (green to red) to use based on the stat value.
+     *
+     * @param statValue The pet's current stat amount (0-100).
+     * @return The constant integer representing the color state row.
+     */
     private int getColorRow(int statValue) {
         if (statValue >= 81) {
             return Constants.STATE_GREEN;

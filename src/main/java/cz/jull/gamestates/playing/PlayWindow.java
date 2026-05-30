@@ -3,9 +3,17 @@ package cz.jull.gamestates.playing;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * The JFrame window that houses the main gameplay panel.
+ */
 public class PlayWindow {
     private JFrame jframe;
 
+    /**
+     * Constructs the PlayWindow and sets it to full screen.
+     *
+     * @param playPanel The JPanel containing the gameplay content.
+     */
     public PlayWindow(PlayPanel playPanel) {
         this.jframe = new JFrame();
 
@@ -26,6 +34,9 @@ public class PlayWindow {
         this.jframe.setVisible(true);
     }
 
+    /**
+     * Closes and disposes of the window.
+     */
     public void closeWindow() {
         jframe.dispose();
     }
