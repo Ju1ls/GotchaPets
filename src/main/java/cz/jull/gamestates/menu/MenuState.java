@@ -61,7 +61,7 @@ public class MenuState extends State implements StateMethods {
     /**
      * {@inheritDoc}
      * <p>
-     * Updates either the credits screen sub-state (if visible) or the main menu button states.
+     * Updates either the credits screen substate (if visible) or the main menu button states.
      * </p>
      */
     @Override
