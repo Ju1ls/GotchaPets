@@ -7,7 +7,7 @@ import java.awt.*;
  * The JFrame window that houses the main gameplay panel.
  */
 public class PlayWindow {
-    private JFrame jframe;
+    private final JFrame jframe;
 
     /**
      * Constructs the PlayWindow and sets it to full screen.

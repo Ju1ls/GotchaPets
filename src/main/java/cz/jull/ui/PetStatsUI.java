@@ -12,7 +12,7 @@ import java.awt.image.BufferedImage;
  * Draws dynamic segmented health bars whose colors change based on the current stat values.
  */
 public class PetStatsUI {
-    private BufferedImage[][] statSegments = new BufferedImage[5][3];
+    private final BufferedImage[][] statSegments = new BufferedImage[5][3];
     private BufferedImage statBackground;
     private BufferedImage statForeground;
 

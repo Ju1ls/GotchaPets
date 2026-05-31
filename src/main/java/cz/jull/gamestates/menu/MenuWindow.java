@@ -8,7 +8,7 @@ import java.awt.*;
  */
 public class MenuWindow {
 
-    private JFrame jframe;
+    private final JFrame jframe;
 
     /**
      * Constructs the MenuWindow and sets it to full screen.

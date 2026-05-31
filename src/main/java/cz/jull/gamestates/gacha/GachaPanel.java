@@ -11,7 +11,7 @@ import java.awt.*;
  * The JPanel responsible for rendering the gacha screen and listening to gacha inputs.
  */
 public class GachaPanel extends JPanel {
-    private Game game;
+    private final Game game;
 
     /**
      * Constructs the GachaPanel.

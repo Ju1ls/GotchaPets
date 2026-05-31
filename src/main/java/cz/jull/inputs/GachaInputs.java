@@ -12,8 +12,8 @@ import java.awt.event.MouseEvent;
  * and delegates them to the GachaState.
  */
 public class GachaInputs extends MouseAdapter {
-    private GachaPanel panel;
-    private GachaState gacha;
+    private final GachaPanel panel;
+    private final GachaState gacha;
 
     /**
      * Constructs the GachaInputs adapter.

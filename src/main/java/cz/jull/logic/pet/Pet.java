@@ -3,7 +3,6 @@ package cz.jull.logic.pet;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.io.Serial;
 import java.io.Serializable;
 
 /**
@@ -13,9 +12,6 @@ import java.io.Serializable;
 @Data
 @NoArgsConstructor
 public class Pet implements Serializable {
-    @Serial
-    private static final long serialVersionUID = 1L;
-
     private String name;
     private PetType type;
     private PetSpecies species;
@@ -25,9 +21,9 @@ public class Pet implements Serializable {
     private int energy = 1;
     private int love = 1;
 
-    private final long DECAY_INTERVAL = 150000L;
-    private final long MAX_COOLDOWN_TIME = 86400000L;
-    private final long FIVE_HOUR_COOLDOWN = 18000000L;
+    private static final long DECAY_INTERVAL = 150000L;
+    private static final long MAX_COOLDOWN_TIME = 86400000L;
+    private static final long FIVE_HOUR_COOLDOWN = 18000000L;
 
     private boolean isSleeping = false;
 

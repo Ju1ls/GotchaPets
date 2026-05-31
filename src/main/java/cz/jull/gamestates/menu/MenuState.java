@@ -17,13 +17,13 @@ import java.awt.event.MouseEvent;
  * Manages the main menu state, allowing the player to start the game, view credits, or quit.
  */
 public class MenuState extends State implements StateMethods {
-    private CreditsScreen creditsScreen;
+    private final CreditsScreen creditsScreen;
     @Setter
     private boolean showCredits = false;
 
-    private Button[] buttons = new Button[3];
+    private final Button[] buttons = new Button[3];
 
-    private BackgroundUI backgroundUI;
+    private final BackgroundUI backgroundUI;
 
     /**
      * Constructs the main menu state.
@@ -50,11 +50,10 @@ public class MenuState extends State implements StateMethods {
         int totalRowWidth = (drawWidth * 3) + (spacing * 2);
         int startX = (Constants.GAME_WIDTH / 2) - (totalRowWidth / 2);
 
-        int leftX = startX;
         int middleX = startX + drawWidth + spacing;
         int rightX = startX + (drawWidth * 2) + (spacing * 2);
 
-        buttons[Constants.BUTTON_QUIT] = UtilsUI.createMenuButton(leftX, yPos, Constants.BUTTON_QUIT);
+        buttons[Constants.BUTTON_QUIT] = UtilsUI.createMenuButton(startX, yPos, Constants.BUTTON_QUIT);
         buttons[Constants.BUTTON_PLAY] = UtilsUI.createMenuButton(middleX, yPos, Constants.BUTTON_PLAY);
         buttons[Constants.BUTTON_CREDITS] = UtilsUI.createMenuButton(rightX, yPos, Constants.BUTTON_CREDITS);
     }

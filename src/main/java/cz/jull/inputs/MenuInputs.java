@@ -13,8 +13,8 @@ import java.awt.event.MouseWheelEvent;
  * and delegates them to the MenuState.
  */
 public class MenuInputs extends MouseAdapter {
-    private MenuPanel panel;
-    private MenuState menu;
+    private final MenuPanel panel;
+    private final MenuState menu;
 
     /**
      * Constructs the MenuInputs adapter.

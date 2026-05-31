@@ -36,17 +36,16 @@ public class GachaState extends State implements StateMethods {
     private Button[] buttons;
 
     // UI
-    private CurrencyUI currencyUI;
-    private BannerUI bannerUI;
-    private BoxUI boxUI;
-    private PetRenderer petRenderer;
+    private final CurrencyUI currencyUI;
+    private final BannerUI bannerUI;
+    private final BoxUI boxUI;
+    private final PetRenderer petRenderer;
 
     // Banners
     private PetType currentBanner = PetType.HOME;
-    private final int GACHA_PRICE = 160;
-    private Random random = new Random();
+    private final Random random = new Random();
 
-    private List<Pet> allAvailablePets;
+    private final List<Pet> allAvailablePets;
 
     private AnimationPhase currentPhase = AnimationPhase.IDLE;
     private int animationTick = 0;
@@ -155,11 +154,11 @@ public class GachaState extends State implements StateMethods {
             case FLASH -> {
                 if (animationTick <= 30) {
                     flashAlpha = Math.min(1.0f, flashAlpha + 0.035f);
-                } else if (animationTick > 30 && animationTick <= 50) {
+                } else if (animationTick <= 50) {
                     flashAlpha = 1.0f;
-                } else if (animationTick > 50 && animationTick < 120) {
+                } else if (animationTick < 120) {
                     flashAlpha = Math.max(0.0f, flashAlpha - 0.015f);
-                } else if (animationTick >= 120) {
+                } else {
                     currentPhase = AnimationPhase.REVEAL;
                     animationTick = 0;
                 }
@@ -180,7 +179,7 @@ public class GachaState extends State implements StateMethods {
         int centerY = Constants.GAME_HEIGHT / 2;
 
         if (currentPhase == AnimationPhase.WAITING_FIRST_CLICK) {
-            boxUI.drawBox(g, centerX, centerY, currentBanner, BoxImageState.BASE);
+            boxUI.drawBox(g, currentBanner, BoxImageState.BASE);
         }
         else if (currentPhase == AnimationPhase.SHAKING_BOX || currentPhase == AnimationPhase.WAITING_SECOND_CLICK) {
             int offsetX = 0;
@@ -189,10 +188,10 @@ public class GachaState extends State implements StateMethods {
                 offsetX = (animationTick % 4 < 2) ? 5 : -5;
             }
 
-            boxUI.drawBox(g, centerX + offsetX, centerY, currentBanner, BoxImageState.CLOSED);
+            boxUI.drawBox(g, currentBanner, BoxImageState.CLOSED);
         }
         else if (currentPhase == AnimationPhase.BOX_OPEN || currentPhase == AnimationPhase.FLASH) {
-            boxUI.drawBox(g, centerX, centerY, currentBanner, BoxImageState.OPEN);
+            boxUI.drawBox(g, currentBanner, BoxImageState.OPEN);
         }
 
         if (currentPhase == AnimationPhase.FLASH) {
@@ -249,6 +248,7 @@ public class GachaState extends State implements StateMethods {
             throw new IllegalStateException("You already own all pets in the " + currentBanner + " banner!");
         }
 
+        int GACHA_PRICE = 160;
         if (game.getPlayer().getCoins() < GACHA_PRICE) {
             throw new IllegalStateException("Not enough coins! You need 160.");
         }
@@ -338,10 +338,7 @@ public class GachaState extends State implements StateMethods {
         if (b == homeGachaButton && currentBanner == PetType.HOME) {
             return false;
         }
-        if (b == waterGachaButton && currentBanner == PetType.WATER) {
-            return false;
-        }
-        return true;
+        return b != waterGachaButton || currentBanner != PetType.WATER;
     }
 
     /**

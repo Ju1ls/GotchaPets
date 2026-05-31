@@ -13,16 +13,16 @@ import java.awt.image.BufferedImage;
  * It calculates drawing coordinates based on species-specific dimensions.
  */
 public class PetRenderer {
-    private BufferedImage[] catSprites = new BufferedImage[4];
-    private BufferedImage[] dogSprites = new BufferedImage[4];
-    private BufferedImage[] rabbitSprites = new BufferedImage[4];
-    private BufferedImage[] hamsterSprites = new BufferedImage[4];
-    private BufferedImage[] parrotSprites = new BufferedImage[4];
-    private BufferedImage[] sealSprites = new BufferedImage[4];
-    private BufferedImage[] jellyfishSprites = new BufferedImage[4];
-    private BufferedImage[] sharkSprites = new BufferedImage[4];
-    private BufferedImage[] turtleSprites = new BufferedImage[4];
-    private BufferedImage[] octopusSprites = new BufferedImage[4];
+    private final BufferedImage[] catSprites = new BufferedImage[4];
+    private final BufferedImage[] dogSprites = new BufferedImage[4];
+    private final BufferedImage[] rabbitSprites = new BufferedImage[4];
+    private final BufferedImage[] hamsterSprites = new BufferedImage[4];
+    private final BufferedImage[] parrotSprites = new BufferedImage[4];
+    private final BufferedImage[] sealSprites = new BufferedImage[4];
+    private final BufferedImage[] jellyfishSprites = new BufferedImage[4];
+    private final BufferedImage[] sharkSprites = new BufferedImage[4];
+    private final BufferedImage[] turtleSprites = new BufferedImage[4];
+    private final BufferedImage[] octopusSprites = new BufferedImage[4];
 
     private BufferedImage zzzImg;
     private BufferedImage petBedImgHome;

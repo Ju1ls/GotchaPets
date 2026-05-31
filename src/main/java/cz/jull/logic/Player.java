@@ -3,7 +3,6 @@ package cz.jull.logic;
 import cz.jull.logic.pet.Pet;
 import lombok.Data;
 
-import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,10 +14,7 @@ import java.util.List;
  */
 @Data
 public class Player implements Serializable {
-    @Serial
-    private static final long serialVersionUID = 1L;
-
-    private int coins = 2000;
+    private int coins = 0;
     private Pet equippedPet;
     private List<Pet> inventory = new ArrayList<>();
 
@@ -35,14 +31,11 @@ public class Player implements Serializable {
      * Attempts to deduct coins from the player's balance.
      *
      * @param amount The number of coins required.
-     * @return True if the player had enough coins and the transaction succeeded, false otherwise.
      */
-    public boolean spendCoins(int amount) {
+    public void spendCoins(int amount) {
         if (coins >= amount) {
             coins -= amount;
-            return true;
         }
-        return false;
     }
 
     /**

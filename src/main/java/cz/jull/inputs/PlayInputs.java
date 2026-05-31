@@ -12,8 +12,8 @@ import java.awt.event.MouseEvent;
  * the internal game resolution, and delegates them to the PlayState.
  */
 public class PlayInputs extends MouseAdapter {
-    private PlayPanel panel;
-    private PlayState play;
+    private final PlayPanel panel;
+    private final PlayState play;
 
     /**
      * Constructs the PlayInputs adapter.

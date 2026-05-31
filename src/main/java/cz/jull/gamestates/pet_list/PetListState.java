@@ -28,7 +28,7 @@ public class PetListState extends State implements StateMethods {
     };
 
     // Pet List
-    private PetListUI petListUI;
+    private final PetListUI petListUI;
 
     /**
      * Constructs the pet list state.

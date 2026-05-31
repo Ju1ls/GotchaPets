@@ -22,11 +22,11 @@ The game relies entirely on a graphical user interface (GUI). Use your mouse (Le
 ![Screenshot of the Menu Screen](link1.png)
 *(Caption: The main menu window.)*
 
-| UI Button / Action | Functionality |
-|:-------------------|:-----------------------------------------------------------------|
-| **Quit Button** | Exits the game. |
-| **Play Button** | Starts the game. |
-| **Credits Button** | Shows the credits |
+| UI Button / Action | Functionality                                               |
+|:-------------------|:------------------------------------------------------------|
+| **Quit Button** | Exits the game.                                             |
+| **Play Button** | Starts the game.                                            |
+| **Credits Button** | Shows the credits                                           |
 
 ---
 
@@ -46,26 +46,27 @@ The game relies entirely on a graphical user interface (GUI). Use your mouse (Le
 ![Screenshot of the Gacha Window](link3.png)
 *(Caption: The Gacha window where players can spend coins to roll for new pets.)*
 
-| UI Button / Action | Functionality |
-|:-------------------|:-----------------------------------------------------------------|
-| **Banner Tabs** | Switch between banners in the Gacha screen to target specific animal types. |
-| **1 Hatch (160 Coins)** | Spends coins to trigger an egg-cracking animation and add a brand new random pet to your inventory. |
-| **Back Button** | Returns to the game. |
+| UI Button / Action | Functionality                                                                                      |
+|:-------------------|:---------------------------------------------------------------------------------------------------|
+| **Banner Tabs**    | Switch between banners in the Gacha screen to target specific animal types.                        |
+| **Buy Button**     | Spends coins to trigger an box opening animation and add a brand new random pet to your inventory. |
+| **Back Button**    | Returns to the game.                                                                               |
 
 ---
 
 ![Screenshot of the Pet list Window](link4.png)
 *(Caption: The Pet list window where players can see their owned and not owned pets.)*
 
-| UI Button / Action | Functionality |
-|:-------------------|:-----------------------------------------------------------------|
-| **Back Button** | Returns to the game. |
+| UI Button / Action | Functionality                        |
+|:-------------------|:-------------------------------------|
+| **Back Button**    | Returns to the game.                 | 
+| **Pets**           | Double click on desired to equip it. | 
 
 ---
 
 ## ⬇️ Installation
 
-To run this game locally, you will need **Java number** installed on your machine.
+To run this game locally, you will need **Java 24** installed on your machine.
 
 1. Download the latest game `.jar` file from this repository.
 2. Open your terminal or command prompt.
@@ -82,5 +83,7 @@ Important Notes:
 
 * The game utilizes Java Swing and AWT for rendering the graphics and UI.
 * Save files are generated automatically in the root folder as savegame.dat. Do not delete this file if you wish to keep your pets and coins!
- 
-No external libraries or frameworks are required to run the game.
+
+Libraries used:
+* [Lombok (v1.18.38)](https://projectlombok.org/)
+* [Jackson Databind (v2.21.1)](https://github.com/FasterXML/jackson-databind)

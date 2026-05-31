@@ -12,12 +12,12 @@ import java.awt.image.BufferedImage;
  * Handles its own bounding box, visual state (default, hover, pressed), and rendering.
  */
 public class Button {
-    private int xPos;
-    private int yPos;
-    private int width;
-    private int height;
+    private final int xPos;
+    private final int yPos;
+    private final int width;
+    private final int height;
 
-    private BufferedImage[] imgs;
+    private final BufferedImage[] imgs;
 
     private int state = Constants.BUTTON_STATE_DEFAULT;
     @Setter

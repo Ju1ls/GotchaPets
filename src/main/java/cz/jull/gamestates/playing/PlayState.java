@@ -30,22 +30,22 @@ public class PlayState extends State implements StateMethods {
     private Button[] buttons;
 
     // Currency
-    private CurrencyUI currencyUI;
+    private final CurrencyUI currencyUI;
 
     // Pets
-    private PetRenderer petRenderer;
+    private final PetRenderer petRenderer;
 
     // Pet Actions
     private int actionSpriteIndex = Constants.ACTION_IDLE;
     private int actionTimer = 0;
 
     // Pet Stats
-    private PetStatsUI petStatsUI;
+    private final PetStatsUI petStatsUI;
 
     // Backgrounds
-    private BackgroundUI backgroundUI;
+    private final BackgroundUI backgroundUI;
 
-    private List<Pet> allAvailablePets;
+    private final List<Pet> allAvailablePets;
 
     /**
      * Constructs the main play state.

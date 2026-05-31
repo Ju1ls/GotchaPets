@@ -8,7 +8,7 @@ import java.awt.*;
  */
 public class GachaWindow {
 
-    private JFrame jframe;
+    private final JFrame jframe;
 
     /**
      * Constructs the GachaWindow and sets it to full screen.

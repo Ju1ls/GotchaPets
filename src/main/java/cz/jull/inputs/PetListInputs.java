@@ -13,8 +13,8 @@ import java.awt.event.MouseWheelEvent;
  * and delegates them to the PetListState.
  */
 public class PetListInputs extends MouseAdapter {
-    private PetListPanel panel;
-    private PetListState petList;
+    private final PetListPanel panel;
+    private final PetListState petList;
 
     /**
      * Constructs the PetListInputs adapter.

@@ -8,7 +8,7 @@ import java.awt.*;
  */
 public class PetListWindow {
 
-    private JFrame jframe;
+    private final JFrame jframe;
 
     /**
      * Constructs the PetListWindow and sets it to full screen.

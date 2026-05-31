@@ -62,12 +62,10 @@ public class BoxUI {
      * Draws the appropriate box image based on the banner type and the requested image state.
      *
      * @param g     The graphics context to draw on.
-     * @param x     The X coordinate to draw the box.
-     * @param y     The Y coordinate to draw the box.
      * @param type  The banner type (e.g., HOME, WATER).
      * @param state The visual state of the box (BASE, CLOSED, OPEN).
      */
-    public void drawBox(Graphics g, int x, int y, PetType type, BoxImageState state) {
+    public void drawBox(Graphics g, PetType type, BoxImageState state) {
         BufferedImage img = null;
 
         switch (type) {

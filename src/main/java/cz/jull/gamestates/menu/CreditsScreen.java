@@ -15,11 +15,11 @@ import java.awt.image.BufferedImage;
  * Represents the credits overlay screen shown within the main menu state.
  */
 public class CreditsScreen implements StateMethods {
-    private MenuState menu;
+    private final MenuState menu;
 
     private BufferedImage titleImg;
     private BufferedImage foregroundImg;
-    private Button backButton;
+    private final Button backButton;
 
     /**
      * Constructs the credits screen.
@@ -77,10 +77,10 @@ public class CreditsScreen implements StateMethods {
         // Button
         backButton.draw(g);
 
-        // might change later
-//        g.setColor(Color.WHITE);
-//        g.setFont(new Font("Arial", Font.BOLD, 30));
-//        g.drawString("lala", 300, foregroundY + 500);
+        g.setColor(Color.WHITE);
+        g.setFont(new Font("Arial", Font.BOLD, 50));
+        g.drawString("Graphics made by @premisedsummer on GitHub", 250,500);
+        g.drawString("Code by @Ju1ls on GitHub", 250,600);
     }
 
     /**
