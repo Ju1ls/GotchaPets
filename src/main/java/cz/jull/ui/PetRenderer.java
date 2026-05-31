@@ -231,15 +231,17 @@ public class PetRenderer {
      */
     public BufferedImage getIdleSprite(PetSpecies species) {
         switch (species) {
-            case CAT -> {
-                return catSprites[Constants.ACTION_IDLE];
-            }
-            case DOG -> {
-                return dogSprites[Constants.ACTION_IDLE];
-            }
-            default -> {
-                return null;
-            }
+            case CAT -> { return catSprites[Constants.ACTION_IDLE]; }
+            case DOG -> { return dogSprites[Constants.ACTION_IDLE]; }
+            case RABBIT -> { return rabbitSprites[Constants.ACTION_IDLE]; }
+            case HAMSTER -> { return hamsterSprites[Constants.ACTION_IDLE]; }
+            case PARROT -> { return parrotSprites[Constants.ACTION_IDLE]; }
+            case SEAL -> { return sealSprites[Constants.ACTION_IDLE]; }
+            case JELLYFISH -> { return jellyfishSprites[Constants.ACTION_IDLE]; }
+            case SHARK -> { return sharkSprites[Constants.ACTION_IDLE]; }
+            case TURTLE -> { return turtleSprites[Constants.ACTION_IDLE]; }
+            case OCTOPUS -> { return octopusSprites[Constants.ACTION_IDLE]; }
+            default -> { return null; }
         }
     }
 }

@@ -31,6 +31,15 @@ public class Constants {
     public static final int BANNER_WIDTH = 1560;
     public static final int BANNER_HEIGHT = 860;
 
+    public static final int BOX_WIDTH = 790;
+    public static final int BOX_HEIGHT = 515;
+
+    public static final int BOX_CLOSED_WIDTH = 810;
+    public static final int BOX_CLOSED_HEIGHT = 475;
+
+    public static final int BOX_OPEN_WIDTH = 1235;
+    public static final int BOX_OPEN_HEIGHT = 665;
+
     // Pet List
     public static final int PET_LIST_WIDTH = 1560;
     public static final int PET_LIST_HEIGHT = 695;

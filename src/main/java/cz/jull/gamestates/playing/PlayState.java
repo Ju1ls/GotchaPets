@@ -148,15 +148,26 @@ public class PlayState extends State implements StateMethods {
         g.setFont(new Font("Arial", Font.BOLD, 60));
         g.drawString("Choose your pet", (Constants.GAME_WIDTH / 2) - 220, 100);
 
-        // Cat
-        int catX = (Constants.GAME_WIDTH / 2) - 350;
-        g.fillRect(catX, 200, 400, 600);
-        g.drawImage(petRenderer.getIdleSprite(PetSpecies.CAT), catX, 215, Constants.CAT_WIDTH, Constants.CAT_HEIGHT, null);
+        int boxY = 200;
+        int boxWidth = 400;
+        int boxHeight = 600;
+        int paddingBottom = 30;
 
-        // Dog
+        int catX = (Constants.GAME_WIDTH / 2) - 350;
+        g.setColor(Color.WHITE);
+        g.fillRect(catX, boxY, boxWidth, boxHeight);
+
+        int catDrawX = catX + (boxWidth - Constants.CAT_WIDTH) / 2;
+        int catDrawY = boxY + boxHeight - Constants.CAT_HEIGHT - paddingBottom;
+        g.drawImage(petRenderer.getIdleSprite(PetSpecies.CAT), catDrawX, catDrawY, Constants.CAT_WIDTH, Constants.CAT_HEIGHT, null);
+
         int dogX = (Constants.GAME_WIDTH / 2) + 50;
-        g.fillRect(dogX, 200, 400, 600);
-        g.drawImage(petRenderer.getIdleSprite(PetSpecies.DOG), dogX, 215, Constants.DOG_WIDTH, Constants.DOG_HEIGHT, null);
+        g.setColor(Color.WHITE);
+        g.fillRect(dogX, boxY, boxWidth, boxHeight);
+
+        int dogDrawX = dogX + (boxWidth - Constants.DOG_WIDTH) / 2;
+        int dogDrawY = boxY + boxHeight - Constants.DOG_HEIGHT - paddingBottom;
+        g.drawImage(petRenderer.getIdleSprite(PetSpecies.DOG), dogDrawX, dogDrawY, Constants.DOG_WIDTH, Constants.DOG_HEIGHT, null);
     }
 
     /**

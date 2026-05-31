@@ -25,6 +25,14 @@ public class LoadSave {
     public static final String HOME_BANNER_GACHA = "home_gacha_banner.png";
     public static final String WATER_BANNER_GACHA = "water_gacha_banner.png";
 
+    public static final String HOME_BOX = "home_box.png";
+    public static final String HOME_BOX_CLOSED = "home_box_closed.png";
+    public static final String HOME_BOX_OPEN = "home_box_open.png";
+
+    public static final String WATER_BOX = "water_box.png";
+    public static final String WATER_BOX_CLOSED = "water_box_closed.png";
+    public static final String WATER_BOX_OPEN = "water_box_open.png";
+
     public static final String PET_LIST = "pet_list.png";
     public static final String PET_NOT_OWNED = "pet_not_owned.png";
 

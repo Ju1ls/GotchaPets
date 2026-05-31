@@ -8,13 +8,17 @@ import cz.jull.logic.pet.Pet;
 import cz.jull.logic.pet.PetType;
 import cz.jull.ui.BannerUI;
 import cz.jull.ui.CurrencyUI;
+import cz.jull.ui.PetRenderer;
 import cz.jull.ui.UtilsUI;
+import cz.jull.ui.box.BoxImageState;
+import cz.jull.ui.box.BoxUI;
 import cz.jull.utils.Constants;
 import cz.jull.utils.SaveManager;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Random;
@@ -34,6 +38,8 @@ public class GachaState extends State implements StateMethods {
     // UI
     private CurrencyUI currencyUI;
     private BannerUI bannerUI;
+    private BoxUI boxUI;
+    private PetRenderer petRenderer;
 
     // Banners
     private PetType currentBanner = PetType.HOME;
@@ -41,6 +47,11 @@ public class GachaState extends State implements StateMethods {
     private Random random = new Random();
 
     private List<Pet> allAvailablePets;
+
+    private AnimationPhase currentPhase = AnimationPhase.IDLE;
+    private int animationTick = 0;
+    private Pet wonPetToDisplay = null;
+    private float flashAlpha = 0.0f;
 
     /**
      * Constructs the gacha state.
@@ -52,6 +63,8 @@ public class GachaState extends State implements StateMethods {
 
         currencyUI = new CurrencyUI();
         bannerUI = new BannerUI();
+        boxUI = new BoxUI();
+        petRenderer = new PetRenderer();
         loadButtons();
 
         allAvailablePets = game.getPetCatalog();
@@ -66,10 +79,14 @@ public class GachaState extends State implements StateMethods {
      */
     @Override
     public void update() {
-        for (Button button : buttons) {
-            if (button != null && isButtonActive(button)) {
-                button.update();
+        if (currentPhase == AnimationPhase.IDLE) {
+            for (Button button : buttons) {
+                if (button != null && isButtonActive(button)) {
+                    button.update();
+                }
             }
+        } else {
+            handleAnimationLogic();
         }
     }
 
@@ -85,18 +102,22 @@ public class GachaState extends State implements StateMethods {
         g.setColor(new Color(89, 198, 255));
         g.fillRect(0, 0, Constants.GAME_WIDTH, Constants.GAME_HEIGHT);
 
-        // Banners
-        bannerUI.draw(g, currentBanner);
+        if (currentPhase == AnimationPhase.IDLE) {
+            // Banners
+            bannerUI.draw(g, currentBanner);
 
-        // Buttons
-        for (Button button : buttons) {
-            if (button != null && isButtonActive(button)) {
-                button.draw(g);
+            // Buttons
+            for (Button button : buttons) {
+                if (button != null && isButtonActive(button)) {
+                    button.draw(g);
+                }
             }
-        }
 
-        // Currency
-        currencyUI.draw(g, game.getPlayer().getCoins());
+            // Currency
+            currencyUI.draw(g, game.getPlayer().getCoins());
+        } else {
+            drawAnimationSequence(g);
+        }
     }
 
     /**
@@ -109,6 +130,104 @@ public class GachaState extends State implements StateMethods {
         buyButton = UtilsUI.createGachaButton(Constants.GAME_WIDTH - 45 - Constants.BUTTON_WIDTH_BACK, 700, 2);
 
         buttons = new Button[] {backButton, homeGachaButton, waterGachaButton, buyButton};
+    }
+
+    /**
+     * Manages automated transitions (shaking, waiting, flashing) in the animation sequence.
+     */
+    private void handleAnimationLogic() {
+        animationTick++;
+
+        switch (currentPhase) {
+            case SHAKING_BOX -> {
+                if (animationTick > 25) {
+                    currentPhase = AnimationPhase.WAITING_SECOND_CLICK;
+                    animationTick = 0;
+                }
+            }
+            case BOX_OPEN -> {
+                if (animationTick > 20) {
+                    currentPhase = AnimationPhase.FLASH;
+                    animationTick = 0;
+                    flashAlpha = 0.0f;
+                }
+            }
+            case FLASH -> {
+                if (animationTick <= 30) {
+                    flashAlpha = Math.min(1.0f, flashAlpha + 0.035f);
+                } else if (animationTick > 30 && animationTick <= 50) {
+                    flashAlpha = 1.0f;
+                } else if (animationTick > 50 && animationTick < 120) {
+                    flashAlpha = Math.max(0.0f, flashAlpha - 0.015f);
+                } else if (animationTick >= 120) {
+                    currentPhase = AnimationPhase.REVEAL;
+                    animationTick = 0;
+                }
+            }
+            default -> {}
+        }
+    }
+
+    /**
+     * Draws the specific graphics corresponding to the current interactive animation phase.
+     *
+     * @param g The graphics context to draw on.
+     */
+    private void drawAnimationSequence(Graphics g) {
+        Graphics2D g2d = (Graphics2D) g;
+
+        int centerX = Constants.GAME_WIDTH / 2;
+        int centerY = Constants.GAME_HEIGHT / 2;
+
+        if (currentPhase == AnimationPhase.WAITING_FIRST_CLICK) {
+            boxUI.drawBox(g, centerX, centerY, currentBanner, BoxImageState.BASE);
+        }
+        else if (currentPhase == AnimationPhase.SHAKING_BOX || currentPhase == AnimationPhase.WAITING_SECOND_CLICK) {
+            int offsetX = 0;
+
+            if (currentPhase == AnimationPhase.SHAKING_BOX) {
+                offsetX = (animationTick % 4 < 2) ? 5 : -5;
+            }
+
+            boxUI.drawBox(g, centerX + offsetX, centerY, currentBanner, BoxImageState.CLOSED);
+        }
+        else if (currentPhase == AnimationPhase.BOX_OPEN || currentPhase == AnimationPhase.FLASH) {
+            boxUI.drawBox(g, centerX, centerY, currentBanner, BoxImageState.OPEN);
+        }
+
+        if (currentPhase == AnimationPhase.FLASH) {
+            g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, flashAlpha));
+            g2d.setColor(Color.WHITE);
+            g2d.fillRect(0, 0, Constants.GAME_WIDTH, Constants.GAME_HEIGHT);
+            g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1.0f));
+        }
+
+        if (currentPhase == AnimationPhase.REVEAL && wonPetToDisplay != null) {
+            BufferedImage petSprite = petRenderer.getIdleSprite(wonPetToDisplay.getSpecies());
+
+            if (petSprite != null) {
+                int width = petSprite.getWidth();
+                int height = petSprite.getHeight();
+
+                int petX = centerX - (width / 2);
+                int petY = centerY - (height / 2);
+
+                g.drawImage(petSprite, petX, petY, width, height, null);
+
+                g.setColor(Color.WHITE);
+                g.setFont(new Font("Arial", Font.BOLD, 30));
+
+                String text = "You got " + wonPetToDisplay.getName() + "!";
+                FontMetrics metrics = g.getFontMetrics(g.getFont());
+                int textX = centerX - (metrics.stringWidth(text) / 2);
+                g.drawString(text, textX, petY - 40);
+
+                g.setFont(new Font("Arial", Font.PLAIN, 18));
+                String clickText = "(Click to continue)";
+                int clickX = centerX - (g.getFontMetrics(g.getFont()).stringWidth(clickText) / 2);
+                g.drawString(clickText, clickX, petY + height + 50);
+            }
+        }
     }
 
     /**
@@ -136,11 +255,12 @@ public class GachaState extends State implements StateMethods {
 
         game.getPlayer().spendCoins(GACHA_PRICE);
 
-        Pet wonPet = pickRandomPetBasedOnRarity(availablePets);
-        game.getPlayer().addPetToInventory(wonPet);
+        wonPetToDisplay = pickRandomPetBasedOnRarity(availablePets);
+        game.getPlayer().addPetToInventory(wonPetToDisplay);
         SaveManager.saveGame(game.getPlayer());
 
-        // TODO: show player what they won
+        currentPhase = AnimationPhase.WAITING_FIRST_CLICK;
+        animationTick = 0;
     }
 
     /**
@@ -233,6 +353,24 @@ public class GachaState extends State implements StateMethods {
     @Override
     public void mouseReleased(MouseEvent e) {
         if (e.getButton() == MouseEvent.BUTTON1) {
+            if (currentPhase == AnimationPhase.WAITING_FIRST_CLICK) {
+                currentPhase = AnimationPhase.SHAKING_BOX;
+                animationTick = 0;
+                return;
+            }
+            if (currentPhase == AnimationPhase.WAITING_SECOND_CLICK) {
+                currentPhase = AnimationPhase.BOX_OPEN;
+                animationTick = 0;
+                return;
+            }
+            if (currentPhase == AnimationPhase.REVEAL) {
+                currentPhase = AnimationPhase.IDLE;
+                wonPetToDisplay = null;
+                return;
+            }
+
+            if (currentPhase != AnimationPhase.IDLE) return;
+
             if (backButton.isMouseOver() && backButton.isMousePressed()) {
                 game.returnToPlaying();
             }
