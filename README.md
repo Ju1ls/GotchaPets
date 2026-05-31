@@ -4,42 +4,51 @@
 
 ## ℹ️ About the Game
 
-GothaPets! is a graphical virtual pet simulator built in Java. You start with a basic companion and must care for their daily needs by feeding them, showing them love, and ensuring they get proper rest. By taking good care of your pets, you earn coins which can be spent in the in-game Gacha system to unlock rare and unique animals from different environments. The game features a real-time persistent save system, meaning your pets will continue to rest or grow hungry even when the application is closed!
+GothaPets! is a graphical virtual pet simulator built in Java. You start with a basic companion and must care for their
+daily needs by feeding them, showing them love, and ensuring they get proper rest. By taking good care of your pets, you
+earn coins which can be spent in the in-game Gacha system to unlock rare and unique animals from different environments.
+The game features a real-time persistent save system, meaning your pets will continue to rest or grow hungry even when
+the application is closed!
 
 ## 🌟 Highlights
 
-- **Real-Time Stat Tracking**: Your pet's Hunger, Energy, and Love stats calculate real-world time, seamlessly tracking offline progress while you are away.
-- **Interactive Care System**: Feed, pet, and put your companion to sleep using custom UI elements to keep them happy and farm currency.
-- **Gacha Mechanics**: Spend your hard-earned coins on multi-themed Gacha banners to expand your pet inventory with new species.
-- **Persistent Save Architecture**: The game automatically serializes and saves your entire player profile, inventory, and coin balance.
+- **Real-Time Stat Tracking**: Your pet's Hunger, Energy, and Love stats calculate real-world time, seamlessly tracking
+  offline progress while you are away.
+- **Interactive Care System**: Feed, pet, and put your companion to sleep using custom UI elements to keep them happy
+  and farm currency.
+- **Gacha Mechanics**: Spend your hard-earned coins on multi-themed Gacha banners to expand your pet inventory with new
+  species.
+- **Persistent Save Architecture**: The game automatically serializes and saves your entire player profile, inventory,
+  and coin balance.
 
 ## 🚀 Usage Instructions
 
-The game relies entirely on a graphical user interface (GUI). Use your mouse (Left-Click) to interact with the on-screen buttons.
+The game relies entirely on a graphical user interface (GUI). Use your mouse (Left-Click) to interact with the on-screen
+buttons.
 
 ---
 
 ![Screenshot of the Menu Screen](link1.png)
 *(Caption: The main menu window.)*
 
-| UI Button / Action | Functionality                                               |
-|:-------------------|:------------------------------------------------------------|
-| **Quit Button** | Exits the game.                                             |
-| **Play Button** | Starts the game.                                            |
-| **Credits Button** | Shows the credits                                           |
+| UI Button / Action | Functionality     |
+|:-------------------|:------------------|
+| **Quit Button**    | Exits the game.   |
+| **Play Button**    | Starts the game.  |
+| **Credits Button** | Shows the credits |
 
 ---
 
 ![Screenshot of the Main Play Screen](link2.png)
 *(Caption: The main pet care window where you manage your companion's stats.)*
 
-| UI Button / Action | Functionality |
-|:-------------------|:-----------------------------------------------------------------|
-| **Feed Button** | Replenishes hunger and grants a small coin reward (Only works when the pet is awake). |
-| **Love Button** | Replenishes affection/love and grants a small coin reward (Only works when the pet is awake). |
-| **Sleep Button** | Toggles the pet's sleep state. Letting a pet complete a full nap to 100%. Energy grants a 100-coin bonus. |
-| **Gacha Button** | Opens the Gacha window to spend your coins and get new pets. |
-| **Back Button** | Returns to the main menu. |
+| UI Button / Action | Functionality                                                                                             |
+|:-------------------|:----------------------------------------------------------------------------------------------------------|
+| **Feed Button**    | Replenishes hunger and grants a small coin reward (Only works when the pet is awake).                     |
+| **Love Button**    | Replenishes affection/love and grants a small coin reward (Only works when the pet is awake).             |
+| **Sleep Button**   | Toggles the pet's sleep state. Letting a pet complete a full nap to 100%. Energy grants a 100-coin bonus. |
+| **Gacha Button**   | Opens the Gacha window to spend your coins and get new pets.                                              |
+| **Back Button**    | Returns to the main menu.                                                                                 |
 
 ---
 
@@ -82,8 +91,10 @@ To run this game locally, you will need **Java 24** installed on your machine.
 Important Notes:
 
 * The game utilizes Java Swing and AWT for rendering the graphics and UI.
-* Save files are generated automatically in the root folder as savegame.dat. Do not delete this file if you wish to keep your pets and coins!
+* Save files are generated automatically in the root folder as savegame.dat. Do not delete this file if you wish to keep
+  your pets and coins!
 
 Libraries used:
+
 * [Lombok (v1.18.38)](https://projectlombok.org/)
 * [Jackson Databind (v2.21.1)](https://github.com/FasterXML/jackson-databind)
